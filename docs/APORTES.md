@@ -1,12 +1,20 @@
-# 📝 Documentación de Aportes - QuickLibrary
+# Documentación de Aportes de los Integrantes - QuickLibrary
 
-## 👥 Asignación de Roles
+## 👥 Asignación de Roles (5 Integrantes)
 
-| Integrante | Rol | Responsabilidades |
-|-----------|-----|-------------------|
-| Integrante 1 | **Estructuras de Datos** | Implementar Cola<T>, ArbolBinarioBúsqueda<T>, Nodos, Nodos del árbol |
-| Integrante 2 | **Lógica del Sistema** | GestorBiblioteca, validaciones, préstamos, devoluciones, reportes |
-| Integrante 3 | **Integración y Pruebas** | Menú (Main), interfaz, pruebas funcionales, documentación |
+| Integrante | Rol | Responsabilidades | Paquete |
+|-----------|-----|-------------------|---------|
+| **Integrante 1** | 🔹 Estructuras: Cola | Implementar Cola<T> genérica con Nodo<T> | `estructuras/` |
+| **Integrante 2** | 🔹 Estructuras: Árbol | Implementar ArbolBinarioBúsqueda<T> con NodoArbol<T> | `estructuras/` |
+| **Integrante 3** | 📦 Modelos | Clases Libro y SolicitudPréstamo, implementar Comparable | `modelos/` |
+| **Integrante 4** | ⚙️ Lógica: Gestión | Métodos RF01, RF02 (libros, búsquedas, modificaciones) | `logica/` |
+| **Integrante 5** | ⚙️ Lógica & Interfaz | Métodos RF03-RF06 (préstamos, devoluciones, menú, pruebas) | `logica/` + `interfaz/` |
+
+
+
+
+
+
 
 ---
 
