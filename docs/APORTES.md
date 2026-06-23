@@ -1,6 +1,6 @@
 # Documentación de Aportes de los Integrantes - QuickLibrary
 
-## Asignación de Roles (5 Integrantes)
+## (5 Integrantes)
 
 | Integrante | Rol | Responsabilidades | Paquete |
 |-----------|-----|-------------------|---------|
