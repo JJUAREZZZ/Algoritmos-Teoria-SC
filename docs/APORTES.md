@@ -9,6 +9,7 @@
 | **Integrante 5** | Lógica & Interfaz | Métodos RF03-RF06 (préstamos, devoluciones, menú, pruebas) | `logica/` + `interfaz/` |
 
 ## Planificación 7 dias del Proyecto
+[Ver imagnes](imagnes/12.png)
 
 
 
