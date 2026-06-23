@@ -38,4 +38,28 @@ public class CustomQueue<T> {
     public boolean isEmpty() {
         return front == null;
     }
+    
+    public T peek() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        return front.value;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void mostrar() {
+        if (isEmpty()) {
+            System.out.println("La cola está vacía.");
+            return;
+        }
+        QueueNode<T> current = front;
+        while (current != null) {
+            System.out.println(current.value.toString());
+            current = current.next;
+        }
+    }
 }
