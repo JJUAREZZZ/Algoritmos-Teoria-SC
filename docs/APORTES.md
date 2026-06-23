@@ -8,5 +8,7 @@
 | **Integrante 4** | Lógica: Gestión | Métodos RF01, RF02 (libros, búsquedas, modificaciones) | `logica/` |
 | **Integrante 5** | Lógica & Interfaz | Métodos RF03-RF06 (préstamos, devoluciones, menú, pruebas) | `logica/` + `interfaz/` |
 
+## Planificación 7 dias del Proyecto
+
 
 
