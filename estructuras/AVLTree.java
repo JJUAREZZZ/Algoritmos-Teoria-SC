@@ -148,9 +148,6 @@ public class AVLTree<E extends Comparable<E>> extends LinkedBST<E> {
         return node;
     }
 
-    
-    
-    
     // Rotación Simple Izquierda RSL
     private NodeAVL rotateSL(NodeAVL node) {
     	NodeAVL p = (NodeAVL) node.right;
@@ -168,17 +165,6 @@ public class AVLTree<E extends Comparable<E>> extends LinkedBST<E> {
     	node = p;
     	return node;
     }	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     @Override
@@ -275,25 +261,6 @@ public class AVLTree<E extends Comparable<E>> extends LinkedBST<E> {
                 break;
         }
         return node;
-    }
-    
-    
-    
-   
-    
-    public void recorridoAmplitudRecursivo() {
-        if (isEmpty()) {
-            System.out.println("El árbol está vacío.");
-            return;
-        }
-        
-        // Obtenemos la altura del árbol rutilizamos el metodo heigth del padre
-        int h = height(this.root.data); 
-        
-        for (int i = 0; i <= h; i++) {
-            imprimirNivel((NodeAVL) this.root, i);
-        }
-        System.out.println();
     }
 
     private void imprimirNivel(NodeAVL nodo, int nivel) {
