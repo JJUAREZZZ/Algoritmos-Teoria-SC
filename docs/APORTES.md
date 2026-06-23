@@ -1,7 +1,5 @@
 # Documentación de Aportes de los Integrantes - QuickLibrary
 
-## (5 Integrantes)
-
 | Integrante | Rol | Responsabilidades | Paquete |
 |-----------|-----|-------------------|---------|
 | **Integrante 1** | Estructuras: Cola | Implementar Cola<T> genérica con Nodo<T> | `estructuras/` |
