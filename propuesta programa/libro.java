@@ -2,7 +2,7 @@ package com.quicklibrary.models;
 
 /**
  * Clase que representa un Libro en el sistema QuickLibrary.
- * Implementa Comparable para permitir su ordenamiento en el ABB.
+ * Implementa Comparable para permitir su ordenamiento en el ABB
  */
 public class Libro implements Comparable<Libro> {
     private String codigo;
