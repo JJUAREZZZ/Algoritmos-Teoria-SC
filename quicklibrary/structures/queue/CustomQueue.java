@@ -1,44 +1,44 @@
 package quicklibrary.structures.queue;
-
+//definimos una cola custom con atributos front, rear y size
 public class CustomQueue<T> {
     private QueueNode<T> front;
     private QueueNode<T> rear;
     private int size;
-
+//se inician los atributos front< rear como nulos y el tamaño en 0
     public CustomQueue() {
         this.front = null;
         this.rear = null;
         this.size = 0;
     }
-
+// se define el metodo para poder encolar (agregar elemento al final de la cola)
     public void enqueue(T value) {
         QueueNode<T> newNode = new QueueNode<T>(value);
-        if (isEmpty()) {
-            front = newNode;
+        if (isEmpty()) { 
+            front = newNode; // eseta linea es para el primer elemento
         } else {
-            rear.next = newNode;
+            rear.next = newNode; //vuelve a enlazar el final del ultimo nodo
         }
-        rear = newNode;
+        rear = newNode; // actualiza el puntero
         size++;
     }
-
+    // retira y retorna el elemento 
     public T dequeue() {
         if (isEmpty()) {
             return null;
         }
         T value = front.value;
-        front = front.next;
+        front = front.next; // mueve el elemento al siguiente
         size--;
         if (front == null) {
-            rear = null;
+            rear = null; // si se logro vaciar el rear tmb es nulo
         }
         return value;
     }
-
+     // verifica si la cola no tiene elementos
     public boolean isEmpty() {
         return front == null;
     }
-    
+        // solo es para devolver un elemento al frente sin quitarlo 
     public T peek() {
         if (isEmpty()) {
             return null;
@@ -46,11 +46,11 @@ public class CustomQueue<T> {
 
         return front.value;
     }
-
+    // cantidad actual de elementos
     public int size() {
         return size;
     }
-
+    // imprime en consola todo 
     public void mostrar() {
         if (isEmpty()) {
             System.out.println("La cola está vacía.");
@@ -59,7 +59,7 @@ public class CustomQueue<T> {
         QueueNode<T> current = front;
         while (current != null) {
             System.out.println(current.value.toString());
-            current = current.next;
+            current = current.next; // avanza al siguiente
         }
     }
 }
