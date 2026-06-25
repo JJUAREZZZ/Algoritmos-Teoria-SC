@@ -227,4 +227,75 @@ public class CustomAVLTree<E extends Comparable<E>> extends CustomBSTree<E> {
         }
         return node;
     }
+
+    public void preOrder() {
+        preOrderRec((NodeAVL) root);
+        System.out.println();
+    }
+
+    private void preOrderRec(NodeAVL node) {
+        if (node != null) {
+            System.out.print(node.data + "(" + node.bf + ") ");
+            preOrderRec((NodeAVL) node.left);
+            preOrderRec((NodeAVL) node.right);
+        }
+    }
+
+    public void inOrder() {
+        inOrderRec((NodeAVL) root);
+        System.out.println();
+    }
+
+    private void inOrderRec(NodeAVL node) {
+        if (node != null) {
+            inOrderRec((NodeAVL) node.left);
+            System.out.print(node.data + "(" + node.bf + ") ");
+            inOrderRec((NodeAVL) node.right);
+        }
+    }
+
+    public void postOrder() {
+        postOrderRec((NodeAVL) root);
+        System.out.println();
+    }
+
+    private void postOrderRec(NodeAVL node) {
+        if (node != null) {
+            postOrderRec((NodeAVL) node.left);
+            postOrderRec((NodeAVL) node.right);
+            System.out.print(node.data + "(" + node.bf + ") ");
+        }
+    }
+
+    public void breadthFirst() {
+        int h = height(root);
+        for (int i = 0; i < h; i++) {
+            printLevel((NodeAVL) root, i);
+        }
+        System.out.println();
+    }
+
+    private void printLevel(NodeAVL node, int level) {
+        if (node == null) return;
+        if (level == 0) System.out.print(node.data + "(" + node.bf + ") ");
+        else {
+            printLevel((NodeAVL) node.left, level - 1);
+            printLevel((NodeAVL) node.right, level - 1);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toStringRec((NodeAVL) root, sb);
+        return sb.toString().trim();
+    }
+
+    private void toStringRec(NodeAVL node, StringBuilder sb) {
+        if (node != null) {
+            toStringRec((NodeAVL) node.left, sb);
+            sb.append(node.data.toString()).append("(").append(node.bf).append(") ");
+            toStringRec((NodeAVL) node.right, sb);
+        }
+    }
 }
