@@ -26,7 +26,6 @@ src/
     │   │   └── CustomQueue.java         # Cola enlazada genérica (<T>). Implementa la lógica FIFO estricta para administrar las solicitudes de préstamo en O(1).
     │   │
     │   ├── tree/                        
-    │   │   ├── TreeNode.java            # Nodo común genérico para el árbol. 
     │   │   ├── CustomBSTree.java        # Árbol Binario de Búsqueda estándar (Obligatorio). 
     │   │   └── CustomAVLTree.java       # Árbol AVL que hereda de CustomBSTree (Opcional con puntaje). 
     │   │
