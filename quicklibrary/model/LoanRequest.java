@@ -46,7 +46,21 @@ public class LoanRequest implements Comparable<LoanRequest> {
     public LocalDate getFechaSolicitud() {
         return fechaSolicitud;
     }
+    @Override
+    public String toString() {
+        return codigoEstudiante + " - " + nombreEstudiante + " solicita " + codigoLibro + " (" + fechaSolicitud + ")";
+    }
 
+    public String toCsv() {
+        return limpiarCsv(codigoEstudiante) + "," + limpiarCsv(nombreEstudiante) + "," +
+                limpiarCsv(codigoLibro) + "," + fechaSolicitud;
+    }
 
+    private String limpiarCsv(String texto) {
+        if (texto == null) {
+            return "";
+        }
+        return texto.replace(",", " ").trim();
+    }    
     
 }
