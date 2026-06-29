@@ -70,5 +70,26 @@ public class LoanRecord implements Comparable<LoanRecord>{
         }
         return texto.replace(",", " ").trim();
     }
+
+    public static LoanRecord fromCsv(String linea) {
+        String[] partes = linea.split(",", -1);
+        if (partes.length < 7) {
+            return null;
+        }
+        LocalDate solicitud;
+        LocalDate atencion;
+        try {
+            solicitud = LocalDate.parse(partes[4].trim());
+        } catch (Exception e) {
+            solicitud = LocalDate.now();
+        }
+        try {
+            atencion = LocalDate.parse(partes[5].trim());
+        } catch (Exception e) {
+            atencion = LocalDate.now();
+        }
+        return new LoanRecord(partes[0].trim(), partes[1].trim(), partes[2].trim(), partes[3].trim(),
+                solicitud, atencion, partes[6].trim());
+    }
     
 }
