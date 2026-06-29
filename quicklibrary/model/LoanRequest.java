@@ -28,5 +28,25 @@ public class LoanRequest implements Comparable<LoanRequest> {
         }
         return this.codigoEstudiante.compareToIgnoreCase(otraSolicitud.codigoEstudiante);
     }
+    // retorna el codigo del estudiante
+    public String getCodigoEstudiante() {
+        return codigoEstudiante;
+    }
+    // devuelve el nombre del estudiante
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
+        
+    }
+    // retorna el codigo del libro solicitado
+    public String getCodigoLibro() {
+        return codigoLibro;
+    }
+    
+    // Devuelve la fecha en la que se registro la solicitud
+    public LocalDate getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+
     
 }
