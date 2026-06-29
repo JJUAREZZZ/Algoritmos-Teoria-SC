@@ -54,4 +54,21 @@ public class LoanRecord implements Comparable<LoanRecord>{
         if (otro == null)  return 1;
         return this.fechaAtencion.compareTo(otro.fechaAtencion);
     }
+
+    @Override
+    public String toString() {
+        return fechaAtencion + " - " + codigoLibro + " - " + resultado;
+    }
+    
+    public String toCsv() {
+        return limpiarCsv(codigoEstudiante) + "," + limpiarCsv(nombreEstudiante) + "," + limpiarCsv(codigoLibro) + "," + limpiarCsv(tituloLibro) + "," +
+                fechaSolicitud + "," + fechaAtencion + "," + limpiarCsv(resultado);
+    }
+    private String limpiarCsv(String texto) {
+        if (texto == null) {
+            return "";
+        }
+        return texto.replace(",", " ").trim();
+    }
+    
 }
