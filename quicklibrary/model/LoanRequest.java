@@ -1,7 +1,7 @@
 package quicklibrary.model;
 
-
-public class LoanRecord {
+import java.time.LocalDate;
+public class LoanRecord implements Comparable<LoanRecord>{
     private String codigoEstudiante;
     private String nombreEstudiante;
     private String codigoLibro;
@@ -19,5 +19,31 @@ public class LoanRecord {
         this.fechaSolicitud = fechaSolicitud;
         this.fechaAtencion = fechaAtencion;
         this.resultado = resultado;
+    }
+    public String getCodigoEstudiante() {
+        return codigoEstudiante;
+    }
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
+    }
+    public String getCodigoLibro() {
+        return codigoLibro;
+    }
+    public String getTituloLibro() {
+        return tituloLibro;
+    }
+    public LocalDate getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+    public LocalDate getFechaAtencion() {
+        return fechaAtencion;
+    }
+    public String getResultado() {
+        return resultado;
+    }
+    @Override
+    public int compareTo(LoanRecord otro) {
+        if (otro == null)  return 1;
+        return this.fechaAtencion.compareTo(otro.fechaAtencion);
     }
 }
