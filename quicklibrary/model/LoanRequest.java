@@ -1,7 +1,10 @@
 package quicklibrary.model;
 
 import java.time.LocalDate;
+// clase que va a arepresntar una solicitud pendiente de prestamo
 public class LoanRequest implements Comparable<LoanRequest> {
+    //atributos necesarios, como el codigo del estudiante, libro, nombre del estudiante 
+    // y la fecha en la que se registra la solicitud
     private String codigoEstudiante;
     private String nombreEstudiante;
     private String codigoLibro;
@@ -13,6 +16,7 @@ public class LoanRequest implements Comparable<LoanRequest> {
         this.codigoLibro = codigoLibro;
         this.fechaSolicitud = fechaSolicitud;
     }
+    // se utiliza para comparar solicitudes usando la fecha y luego el codigo del estudiante
     @Override
     public int compareTo(LoanRequest otraSolicitud) {
         if (otraSolicitud == null) {
