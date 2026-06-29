@@ -1,6 +1,7 @@
 package quicklibrary.model;
 
 import java.time.LocalDate;
+// clase que representa un prestamo ya atendido
 public class LoanRecord implements Comparable<LoanRecord>{
     private String codigoEstudiante;
     private String nombreEstudiante;
@@ -20,29 +21,36 @@ public class LoanRecord implements Comparable<LoanRecord>{
         this.fechaAtencion = fechaAtencion;
         this.resultado = resultado;
     }
+    // retorna el codigo del estudiante
     public String getCodigoEstudiante() {
         return codigoEstudiante;
     }
+    // retorna el nombre del estudiante
     public String getNombreEstudiante() {
         return nombreEstudiante;
     }
+    // retorna el codigo del libro
     public String getCodigoLibro() {
         return codigoLibro;
     }
+    // retorna el titulo del libro
     public String getTituloLibro() {
         return tituloLibro;
     }
+    // retorna la fecha de la solicitud
     public LocalDate getFechaSolicitud() {
         return fechaSolicitud;
     }
+    // retorna la fecha de atencion
     public LocalDate getFechaAtencion() {
         return fechaAtencion;
     }
+    // devuelve el resultado de la atencion de la solicitud
     public String getResultado() {
         return resultado;
     }
-    @Override
-    public int compareTo(LoanRecord otro) {
+    @Override // se sobreescribe el metodo para poder comparar los objetos
+    public int compareTo(LoanRecord otro) { // compara registros segun la fecha que se atendio
         if (otro == null)  return 1;
         return this.fechaAtencion.compareTo(otro.fechaAtencion);
     }
