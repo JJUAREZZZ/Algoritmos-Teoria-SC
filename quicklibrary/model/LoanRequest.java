@@ -19,48 +19,48 @@ public class LoanRequest implements Comparable<LoanRequest> {
     // se utiliza para comparar solicitudes usando la fecha y luego el codigo del estudiante
     @Override
     public int compareTo(LoanRequest otraSolicitud) {
-        if (otraSolicitud == null) {
-            return 1;
-        }
+        if (otraSolicitud == null) return 1;
         int comparacion = this.fechaSolicitud.compareTo(otraSolicitud.fechaSolicitud);
-        if (comparacion != 0) {
-            return comparacion;
-        }
+        
+        if (comparacion != 0) return comparacion;
         return this.codigoEstudiante.compareToIgnoreCase(otraSolicitud.codigoEstudiante);
     }
     // retorna el codigo del estudiante
-    public String getCodigoEstudiante() {
-        return codigoEstudiante;
-    }
+    public String getCodigoEstudiante()  return codigoEstudiante;
     // devuelve el nombre del estudiante
-    public String getNombreEstudiante() {
-        return nombreEstudiante;
-        
-    }
+    public String getNombreEstudiante()   return nombreEstudiante;
     // retorna el codigo del libro solicitado
-    public String getCodigoLibro() {
-        return codigoLibro;
-    }
+    public String getCodigoLibro()  return codigoLibro;
     
     // Devuelve la fecha en la que se registro la solicitud
-    public LocalDate getFechaSolicitud() {
-        return fechaSolicitud;
-    }
+    public LocalDate getFechaSolicitud()  return fechaSolicitud;
+
     @Override
     public String toString() {
         return codigoEstudiante + " - " + nombreEstudiante + " solicita " + codigoLibro + " (" + fechaSolicitud + ")";
     }
 
     public String toCsv() {
-        return limpiarCsv(codigoEstudiante) + "," + limpiarCsv(nombreEstudiante) + "," +
-                limpiarCsv(codigoLibro) + "," + fechaSolicitud;
+        return limpiarCsv(codigoEstudiante) + "," + limpiarCsv(nombreEstudiante) + "," + limpiarCsv(codigoLibro) + "," + fechaSolicitud;
     }
 
     private String limpiarCsv(String texto) {
-        if (texto == null) {
-            return "";
-        }
+        if (texto == null)  return "";
         return texto.replace(",", " ").trim();
-    }    
+    }   
+
+    public static LoanRequest fromCsv(String linea) {
+        String[] partes = linea.split(",", -1);
+        if (partes.length < 4) {
+            return null;
+        }
+        LocalDate fecha;
+        try {
+            fecha = LocalDate.parse(partes[3].trim());
+        } catch (Exception e) {
+            fecha = LocalDate.now();
+        }
+        return new LoanRequest(partes[0].trim(), partes[1].trim(), partes[2].trim(), fecha);
+    }
     
 }
