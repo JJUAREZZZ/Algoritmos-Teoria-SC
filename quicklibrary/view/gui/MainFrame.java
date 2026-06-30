@@ -33,3 +33,26 @@ public class MainFrame extends JFrame {
             // Si no carga el estilo del sistema, se usa el estilo por defecto de Swing.
         }
     }
+ private void crearComponentes() {
+        JLabel titulo = new JLabel("QUICKLIBRARY", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 26));
+        add(titulo, BorderLayout.NORTH);
+
+        bookPanel = new BookPanel(controlador);
+        loanPanel = new LoanPanel(controlador);
+        reportPanel = new ReportPanel(controlador);
+
+        JTabbedPane pestanias = new JTabbedPane();
+        pestanias.addTab("Libros", bookPanel);
+        pestanias.addTab("Prestamos", loanPanel);
+        pestanias.addTab("Reportes", reportPanel);
+
+        pestanias.addChangeListener(e -> {
+            bookPanel.actualizarTabla(controlador.obtenerTodosLibros());
+            loanPanel.actualizarTodo();
+            reportPanel.actualizarReporte();
+        });
+
+        add(pestanias, BorderLayout.CENTER);
+    }
+}
