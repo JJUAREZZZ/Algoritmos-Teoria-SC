@@ -119,3 +119,14 @@ private void actualizarSolicitudes() {
             modeloSolicitudes.addRow(fila);
         }
     }
+ private void actualizarHistorial() {
+        modeloHistorial.setRowCount(0);
+        CustomLinkedList<LoanRecord> historial = controlador.obtenerHistorialPrestamos();
+        int i;
+        for (i = 0; i < historial.size(); i++) {
+            LoanRecord registro = historial.get(i);
+            Object[] fila = {registro.getFechaAtencion(), registro.getNombreEstudiante(), registro.getCodigoLibro(),
+                    registro.getTituloLibro(), registro.getResultado()};
+            modeloHistorial.addRow(fila);
+        }
+    }
