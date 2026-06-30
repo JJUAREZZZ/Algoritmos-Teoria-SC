@@ -42,7 +42,7 @@ public class FileManager {
     BufferedWriter escritor = null;
     try {
       escritor = new BufferedWriter(new FileWriter(destino));
-      escritor.write("codigoEstudiante, nombreEstudiante, codigoLibro, tituloLibro, fechaSolicitud, fechaAtencion, resultado\n");
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,tituloLibro,fechaSolicitud,fechaAtencion,resultado\n");
       int i;
       for (i = 0; i < historial.size(); i++) {
         escritor.write(historial.get(i).toCsv());
@@ -57,7 +57,7 @@ public class FileManager {
     BufferedWriter escritor = null;
     try {
       escritor = new BufferedWriter(new FileWriter(destino));
-      escritor.write("codigoEstudiante, nombreEstudiante, codigoLibro, fechaSolicitud\n");
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,fechaSolicitud\n");
       int i;
       for (i = 0; i < solicitudes.size(); i++) {
         escritor.write(solicitudes.get(i).toCsv());
@@ -93,23 +93,23 @@ public class FileManager {
     CustomLinkedList<Book> libros = new CustomLinkedList<Book>();
     BufferedReader lector = null;
     try {
-        lector = new BufferedReader(new FileReader(origen));
-        String linea;
-        while ((linea = lector.readLine()) != null) {
-            if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
-                continue;
-            }
-            Book libro = Book.fromCsv(linea);
-            if (libro != null) {
-                libros.addLast(libro);
-            }
+      lector = new BufferedReader(new FileReader(origen));
+      String linea;
+      while ((linea = lector.readLine()) != null) {
+        if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
+          continue;
         }
+        Book libro = Book.fromCsv(linea);
+        if (libro != null) {
+          libros.addLast(libro);
+        }
+      }
     } finally {
-        cerrarLector(lector);
+      cerrarLector(lector);
     }
     return libros;
   }
-  
+
   public CustomLinkedList<LoanRequest> cargarSolicitudesCsv(File origen) throws IOException {
     CustomLinkedList<LoanRequest> solicitudes = new CustomLinkedList<LoanRequest>();
     BufferedReader lector = null;
@@ -130,7 +130,7 @@ public class FileManager {
     }
     return solicitudes;
   }
-  
+
   public CustomLinkedList<LoanRecord> cargarHistorialCsv(File origen) throws IOException {
     CustomLinkedList<LoanRecord> historial = new CustomLinkedList<LoanRecord>();
     BufferedReader lector = null;
@@ -143,7 +143,7 @@ public class FileManager {
         }
         LoanRecord registro = LoanRecord.fromCsv(linea);
         if (registro != null) {
-          historial.addLast(registro); 
+          historial.addLast(registro);
         }
       }
     } finally {
@@ -151,7 +151,7 @@ public class FileManager {
     }
     return historial;
   }
-  
+
   public void guardarLibrosCsv(CustomLinkedList<Book> libros, File destino) {
     BufferedWriter escritor = null;
     try {
@@ -168,12 +168,12 @@ public class FileManager {
       cerrarEscritor(escritor);
     }
   }
-  
+
   public void guardarSolicitudesCsv(CustomLinkedList<LoanRequest> solicitudes, File destino) {
     BufferedWriter escritor = null;
     try {
       escritor = new BufferedWriter(new FileWriter(destino));
-      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,fechaSolicitud\n"); 
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,fechaSolicitud\n");
       int i;
       for (i = 0; i < solicitudes.size(); i++) {
         escritor.write(solicitudes.get(i).toCsv());
@@ -185,7 +185,7 @@ public class FileManager {
       cerrarEscritor(escritor);
     }
   }
-  
+
   public void guardarHistorialCsv(CustomLinkedList<LoanRecord> historial, File destino) {
     BufferedWriter escritor = null;
     try {
@@ -202,7 +202,7 @@ public class FileManager {
       cerrarEscritor(escritor);
     }
   }
-  
+
   private void cerrarLector(BufferedReader lector) {
     if (lector != null) {
       try {
@@ -212,7 +212,7 @@ public class FileManager {
       }
     }
   }
-  
+
   private void cerrarEscritor(BufferedWriter escritor) {
     if (escritor != null) {
       try {
@@ -222,4 +222,4 @@ public class FileManager {
       }
     }
   }
-}  
+}
