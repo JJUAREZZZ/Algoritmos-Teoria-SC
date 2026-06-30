@@ -99,8 +99,14 @@ public class LibraryController {
     }
 
     public String registrarDevolucion(String codigoLibro) throws ValidationException, BookNotFoundException {
-
-
+        String codigoLimpio = validarTexto(codigoLibro, "codigo del libro");
+        Book libro = buscarLibroPorCodigo(codigoLimpio);
+        if (libro.getEstado() == BookStatus.DISPONIBLE) {
+            return "El libro ya se encontraba disponible.";
+        }
+        libro.setEstado(BookStatus.DISPONIBLE);
+        guardarLibros();
+        return "Devolucion registrada correctamente para el libro: " + libro.getTitulo() + ".";
     return " ";
     }
 
@@ -108,7 +114,7 @@ public class LibraryController {
 
     }
     public int contarSolicitudesPendientes() {
-
+        return colaSolicitudes.size();
     }
 
     public int contarHistorial() {
