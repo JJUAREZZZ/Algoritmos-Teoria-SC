@@ -17,7 +17,7 @@ public class Book implements Comparable<Book> {
         this.anio = anio;
         this.estado = estado;
     }
-    //metodos que nos permiten modificar y que nos retornen el codigo, titulo, autor, categoria del libro
+    //metodos que nos permiten modificar y que nos retornen el codigo, titulo, autor, categoria, anio(año), estado del libro
     public String getCodigo() {
         return codigo;
     }
@@ -61,6 +61,7 @@ public class Book implements Comparable<Book> {
         this.estado = estado;
     }
 
+    
     public boolean estaDisponible() {
         return this.estado == BookStatus.DISPONIBLE;
     }
