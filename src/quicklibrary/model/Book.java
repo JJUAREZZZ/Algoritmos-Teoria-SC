@@ -78,12 +78,12 @@ public class Book implements Comparable<Book> {
     public String toString() {
         return codigo + " - " + titulo + " (" + estado + ")";
     }
-
+    // Convierte el objeto en una línea de texto para guardar en un archivo CSV.
     public String toCsv() {
         return limpiarCsv(codigo) + "," + limpiarCsv(titulo) + "," + limpiarCsv(autor) + "," +
                 limpiarCsv(categoria) + "," + anio + "," + estado;
     }
-
+    // Crea un objeto Book a partir de una línea de un archivo CSV.
     public static Book fromCsv(String linea) {
         String[] partes = linea.split(",", -1);
         if (partes.length < 6) {
