@@ -27,9 +27,7 @@ public class CustomQueue<T extends Comparable<T>>  {
     }
     // retira y retorna el elemento 
     public T dequeue() {
-        if (isEmpty()) {
-            return null;
-        }
+        if (isEmpty())  return null;
         T value = front.value;
         front = front.next; // mueve el elemento al siguiente
         size--;
@@ -44,15 +42,28 @@ public class CustomQueue<T extends Comparable<T>>  {
     }
         // solo es para devolver un elemento al frente sin quitarlo 
     public T peek() {
-        if (isEmpty()) {
-            return null;
-        }
-
+        if (isEmpty())  return null;
+        
         return front.value;
     }
     // cantidad actual de elementos
     public int size() {
         return size;
+    }
+    public CustomLinkedList<T> toList() {
+        CustomLinkedList<T> lista = new CustomLinkedList<T>();
+        QueueNode<T> current = front;
+        while (current != null) {
+            lista.addLast(current.value);
+            current = current.next;
+        }
+        return lista;
+    }
+
+    public void clear() {
+        front = null;
+        rear = null;
+        size = 0;
     }
     // imprime en consola todo 
     public void mostrar() {
