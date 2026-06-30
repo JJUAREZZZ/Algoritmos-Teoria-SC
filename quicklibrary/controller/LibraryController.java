@@ -1,10 +1,6 @@
 package quicklibrary.controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -108,10 +104,19 @@ public class LibraryController {
         return arbolLibros.searchOrNull(llave);
     }
 
-    public CustomLinkedList<Book> obtenerTodosLibros() {
-        return arbolLibros.inOrder();
+    public CustomLinkedList<Book> obtenerLibrosDisponibles() {
+        CustomLinkedList<Book> todos = obtenerTodosLibros();
+        CustomLinkedList<Book> resultado = new CustomLinkedList<Book>();
+        int i;
+        for (i = 0; i < todos.size(); i++) {
+            Book libro = todos.get(i);
+            if (libro.getEstado() == BookStatus.DISPONIBLE) {
+                resultado.addLast(libro);
+            }
+        }
+        return resultado;
     }
-
+    
     public CustomLinkedList<Book> obtenerLibrosDisponibles() {
         CustomLinkedList<Book> todos = obtenerTodosLibros();
         CustomLinkedList<Book> resultado = new CustomLinkedList<Book>();
@@ -376,27 +381,18 @@ public class LibraryController {
             guardarLibros();
             return;
         }
-        BufferedReader lector = null;
         try {
-            lector = new BufferedReader(new FileReader(archivoLibros));
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
-                    continue;
-                }
-                Book libro = Book.fromCsv(linea);
-                if (libro != null) {
-                    try {
-                        arbolLibros.insert(libro);
-                    } catch (DuplicateKeyException e) {
-                        // Si el archivo trae duplicados, se ignoran para conservar la clave unica.
-                    }
+            CustomLinkedList<Book> libros = gestorArchivos.cargarLibrosCsv(archivoLibros);
+            int i;
+            for (i = 0; i < libros.size(); i++) {
+                try {
+                    arbolLibros.insert(libros.get(i));
+                } catch (DuplicateKeyException e) {
+                    // Si el archivo trae duplicados, se ignoran para conservar la clave unica.
                 }
             }
         } catch (IOException e) {
             cargarDatosIniciales();
-        } finally {
-            cerrarLector(lector);
         }
         if (arbolLibros.size() == 0) {
             cargarDatosIniciales();
@@ -408,23 +404,14 @@ public class LibraryController {
         if (!archivoSolicitudes.exists()) {
             return;
         }
-        BufferedReader lector = null;
         try {
-            lector = new BufferedReader(new FileReader(archivoSolicitudes));
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
-                    continue;
-                }
-                LoanRequest solicitud = LoanRequest.fromCsv(linea);
-                if (solicitud != null) {
-                    colaSolicitudes.enqueue(solicitud);
-                }
+            CustomLinkedList<LoanRequest> solicitudes = gestorArchivos.cargarSolicitudesCsv(archivoSolicitudes);
+            int i;
+            for (i = 0; i < solicitudes.size(); i++) {
+                colaSolicitudes.enqueue(solicitudes.get(i));
             }
         } catch (IOException e) {
             // Si no se puede leer, simplemente inicia sin solicitudes.
-        } finally {
-            cerrarLector(lector);
         }
     }
 
@@ -432,29 +419,72 @@ public class LibraryController {
         if (!archivoHistorial.exists()) {
             return;
         }
-        CustomLinkedList<LoanRecord> temporal = new CustomLinkedList<LoanRecord>();
-        BufferedReader lector = null;
         try {
-            lector = new BufferedReader(new FileReader(archivoHistorial));
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
-                    continue;
-                }
-                LoanRecord registro = LoanRecord.fromCsv(linea);
-                if (registro != null) {
-                    temporal.addLast(registro);
-                }
+            CustomLinkedList<LoanRecord> temporal = gestorArchivos.cargarHistorialCsv(archivoHistorial);
+            int i;
+            for (i = temporal.size() - 1; i >= 0; i--) {
+                historialPrestamos.push(temporal.get(i));
             }
         } catch (IOException e) {
             // Sin historial si el archivo no se puede leer.
-        } finally {
-            cerrarLector(lector);
-        }
-        int i;
-        for (i = temporal.size() - 1; i >= 0; i--) {
-            historialPrestamos.push(temporal.get(i));
         }
     }
+
+    private void guardarLibros() {
+        gestorArchivos.guardarLibrosCsv(obtenerTodosLibros(), archivoLibros);
+    }
+
+    private void guardarSolicitudes() {
+        gestorArchivos.guardarSolicitudesCsv(obtenerSolicitudesPendientes(), archivoSolicitudes);
+    }
+
+    private void guardarHistorial() {
+        gestorArchivos.guardarHistorialCsv(obtenerHistorialPrestamos(), archivoHistorial);
+    }
+
+    private void cargarDatosIniciales() {
+        Object[][] datos = {
+                {"101", "Programacion en Java", "Herbert Schildt", "Programacion", 2022, BookStatus.DISPONIBLE},
+                {"102", "Estructuras de Datos", "Mark Allen Weiss", "Computacion", 2021, BookStatus.DISPONIBLE},
+                {"103", "Introduccion a los Algoritmos", "Thomas Cormen", "Algoritmos", 2022, BookStatus.PRESTADO},
+                {"104", "Clean Code", "Robert C. Martin", "Programacion", 2008, BookStatus.DISPONIBLE},
+                {"105", "Design Patterns", "Erich Gamma", "Software", 1994, BookStatus.DISPONIBLE},
+                {"106", "Base de Datos", "Abraham Silberschatz", "Base de datos", 2019, BookStatus.DISPONIBLE},
+                {"107", "Sistemas Operativos", "Abraham Silberschatz", "Sistemas", 2020, BookStatus.PRESTADO},
+                {"108", "Redes de Computadoras", "Andrew Tanenbaum", "Redes", 2011, BookStatus.DISPONIBLE},
+                {"109", "Ingenieria de Software", "Ian Sommerville", "Software", 2015, BookStatus.DISPONIBLE},
+                {"110", "Inteligencia Artificial", "Stuart Russell", "Inteligencia Artificial", 2021, BookStatus.DISPONIBLE},
+                {"111", "Calculo de Una Variable", "James Stewart", "Matematica", 2016, BookStatus.DISPONIBLE},
+                {"112", "Algebra Lineal", "Gilbert Strang", "Matematica", 2019, BookStatus.PRESTADO},
+                {"113", "Fisica Universitaria", "Young Freedman", "Fisica", 2018, BookStatus.DISPONIBLE},
+                {"114", "Probabilidad y Estadistica", "Murray Spiegel", "Estadistica", 2017, BookStatus.DISPONIBLE},
+                {"115", "Compiladores", "Alfred Aho", "Computacion", 2007, BookStatus.DISPONIBLE},
+                {"116", "Arquitectura de Computadoras", "John Hennessy", "Hardware", 2019, BookStatus.DISPONIBLE},
+                {"117", "Patrones de Arquitectura", "Martin Fowler", "Software", 2002, BookStatus.DISPONIBLE},
+                {"118", "Python para Todos", "Charles Severance", "Programacion", 2016, BookStatus.PRESTADO},
+                {"119", "Matematica Discreta", "Kenneth Rosen", "Matematica", 2018, BookStatus.DISPONIBLE},
+                {"120", "Seguridad Informatica", "William Stallings", "Seguridad", 2020, BookStatus.DISPONIBLE},
+                {"121", "Mineria de Datos", "Jiawei Han", "Datos", 2011, BookStatus.DISPONIBLE},
+                {"122", "Analisis y Diseno de Algoritmos", "Anany Levitin", "Algoritmos", 2012, BookStatus.DISPONIBLE},
+                {"123", "Desarrollo Web Moderno", "Jennifer Robbins", "Web", 2020, BookStatus.DISPONIBLE},
+                {"124", "Fundamentos de Programacion", "Luis Joyanes", "Programacion", 2017, BookStatus.DISPONIBLE},
+                {"125", "Gestion de Proyectos", "Kathy Schwalbe", "Gestion", 2019, BookStatus.DISPONIBLE},
+                {"126", "Computacion en la Nube", "Rajkumar Buyya", "Cloud", 2013, BookStatus.PRESTADO},
+                {"127", "Machine Learning", "Tom Mitchell", "Inteligencia Artificial", 1997, BookStatus.DISPONIBLE},
+                {"128", "Programacion Concurrente", "Brian Goetz", "Programacion", 2006, BookStatus.DISPONIBLE},
+                {"129", "UX Design", "Don Norman", "Diseno", 2013, BookStatus.DISPONIBLE},
+                {"130", "Administracion de Redes", "Kurose Ross", "Redes", 2021, BookStatus.DISPONIBLE}
+        };
+
+        int i;
+        for (i = 0; i < datos.length; i++) {
+            Book libro = new Book((String) datos[i][0], (String) datos[i][1], (String) datos[i][2],
+                    (String) datos[i][3], (Integer) datos[i][4], (BookStatus) datos[i][5]);
+            try {
+                arbolLibros.insert(libro);
+            } catch (DuplicateKeyException e) {
+                // No deberia ocurrir con datos iniciales controlados.
+            }
+        }
     }
 }
