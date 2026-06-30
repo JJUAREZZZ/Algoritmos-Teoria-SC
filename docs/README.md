@@ -69,52 +69,7 @@ src/
 - ✅ Analizar complejidad temporal de operaciones
 - ✅ Usar Git/GitHub para control de versiones
 
----
-
-## 🏗️ Componentes Principales
-
-### Estructuras de Datos (`estructuras`)
-- **Cola<T>**: Cola genérica con operaciones enqueue, dequeue, peek, isEmpty, size, mostrar
-- **ArbolBinarioBúsqueda<T>**: Árbol genérico con inserción, búsqueda, eliminación, recorrido inorden
-
-### Modelos (`modelos`)
-- **Libro**: Código, Título, Autor, Categoría, Año, Estado
-- **SolicitudPréstamo**: Código estudiante, Nombre, Código libro, Fecha solicitud
-
-### Lógica (`logica`)
-- **GestorBiblioteca**: Gestión de libros, búsquedas, préstamos y reportes
-
-### Interfaz (`interfaz`)
-- **Menu**: Menú de consola con 12 opciones principales
-- **Main**: Punto de entrada de la aplicación
-
----
-
-## 📋 Requisitos Funcionales
-
-| ID | Descripción |
-|-----|-------------|
-| RF01 | Gestión de libros (registrar, mostrar, modificar, eliminar, disponibles, prestados) |
-| RF02 | Búsqueda por código (árbol), título, autor, categoría |
-| RF03 | Gestión de solicitudes de préstamo (registrar, mostrar, consultar, atender) |
-| RF04 | Préstamo verificando disponibilidad |
-| RF05 | Devolución de libros |
-| RF06 | Reportes (cantidades, estado) |
-
----
-
-## 🚀 Cómo Ejecutar
-
-### Compilar
-```bash
-javac -d bin src/main/java/*/*.java
-```
-
-### Ejecutar
-```bash
-java -cp bin interfaz.Main
-```
-
+-
 
 
 
