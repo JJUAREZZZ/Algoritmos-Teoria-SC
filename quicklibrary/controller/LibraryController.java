@@ -44,35 +44,43 @@ public class LibraryController {
     }
 
     public String atenderSiguienteSolicitud() {
+        // se obtiene la primera solicitud de la cola sin retirarla todavia
         LoanRequest solicitud = colaSolicitudes.peek();
-        if (solicitud == null) {
-            return "No existen solicitudes pendientes.";
-        }
-
+        // se valida si existen pendientes por atender
+        if (solicitud == null) return "No existen solicitudes pendientes.";
+        // se busca libro solicitado usando el docido registrado de la solicitud
         Book libro = buscarLibroPorCodigoSinExcepcion(solicitud.getCodigoLibro());
         String resultado;
         String tituloLibro = "No encontrado";
-
+        // verifica si el libro no existe
         if (libro == null) {
             resultado = "Solicitud atendida: el libro con codigo " + solicitud.getCodigoLibro() + " no existe.";
+        //el libro existe pero no esta disponible para prestamos
         } else if (!libro.estaDisponible()) {
             tituloLibro = libro.getTitulo();
             resultado = "Solicitud atendida: el libro '" + libro.getTitulo() + "' no esta disponible.";
+        // existe y esta disponible para resgistrar el prestamo
         } else {
             tituloLibro = libro.getTitulo();
             libro.setEstado(BookStatus.PRESTADO);
             resultado = "Prestamo realizado correctamente para " + solicitud.getNombreEstudiante() +
                     ". Libro: " + libro.getTitulo() + ".";
         }
-
         colaSolicitudes.dequeue();
+        // se crea el registro
         LoanRecord registro = new LoanRecord(solicitud.getCodigoEstudiante(), solicitud.getNombreEstudiante(),
                 solicitud.getCodigoLibro(), tituloLibro, solicitud.getFechaSolicitud(), LocalDate.now(), resultado);
         historialPrestamos.push(registro);
+        // se guarda cambios
         guardarLibros();
         guardarSolicitudes();
         guardarHistorial();
         return resultado;
+    }
+    private Book buscarLibroPorCodigoSinExcepcion(String codigo) {
+        if (codigo == null) return null;
+        Book llave = new Book(codigo.trim(), "", "", "", 0, BookStatus.DISPONIBLE);
+        return arbolLibros.searchOrNull(llave);
     }
 
     public String exportarReporte() throws IOException {
