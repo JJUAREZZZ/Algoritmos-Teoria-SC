@@ -151,28 +151,70 @@ public class LoanPanel extends JPanel {
         ));
         return boton;
     }
-
-    public void actualizarTodo() {
+public void actualizarTodo() {
+        actualizarSolicitudes();
+        actualizarHistorial();
     }
 
     private void actualizarSolicitudes() {
+        modeloSolicitudes.setRowCount(0);
+        CustomLinkedList<LoanRequest> solicitudes = controlador.obtenerSolicitudesPendientes();
+        if (solicitudes == null) return;
+        for (int i = 0; i < solicitudes.size(); i++) {
+            LoanRequest solicitud = solicitudes.get(i);
+            Object[] fila = {solicitud.getCodigoEstudiante(), solicitud.getNombreEstudiante(),
+                    solicitud.getCodigoLibro(), solicitud.getFechaSolicitud()};
+            modeloSolicitudes.addRow(fila);
+        }
     }
 
     private void actualizarHistorial() {
+        modeloHistorial.setRowCount(0);
+        CustomLinkedList<LoanRecord> historial = controlador.obtenerHistorialPrestamos();
+        if (historial == null) return;
+        for (int i = 0; i < historial.size(); i++) {
+            LoanRecord registro = historial.get(i);
+            Object[] fila = {registro.getFechaAtencion(), registro.getNombreEstudiante(), registro.getCodigoLibro(),
+                    registro.getTituloLibro(), registro.getResultado()};
+            modeloHistorial.addRow(fila);
+        }
     }
 
     private void registrarSolicitud() {
+        try {
+            controlador.registrarSolicitud(txtCodigoEstudiante.getText(), txtNombreEstudiante.getText(), txtCodigoLibro.getText());
+            JOptionPane.showMessageDialog(this, "Listo, la solicitud se agrego a la cola");
+            limpiarCampos();
+            actualizarTodo();
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
     }
 
     private void mostrarSiguiente() {
+        LoanRequest solicitud = controlador.consultarSiguienteSolicitud();
+        if (solicitud == null) {
+            JOptionPane.showMessageDialog(this, "No hay solicitudes pendientes en este momento");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Proxima solicitud:\n" + solicitud.toString());
     }
 
     private void atenderSolicitud() {
+        String resultado = controlador.atenderSiguienteSolicitud();
+        JOptionPane.showMessageDialog(this, resultado);
+        actualizarTodo();
     }
 
     private void limpiarCampos() {
+        txtCodigoEstudiante.setText("");
+        txtNombreEstudiante.setText("");
+        txtCodigoLibro.setText("");
+        tablaSolicitudes.clearSelection();
+        tablaHistorial.clearSelection();
     }
 
     private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.WARNING_MESSAGE);
     }
 }
