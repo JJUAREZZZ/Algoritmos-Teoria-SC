@@ -26,8 +26,15 @@ public class ReportPanel extends JPanel {
     }
 
     public void actualizarReporte() {
+        areaReporte.setText(controlador.generarReporteTexto());
     }
 
     private void exportarReporte() {
+        try {
+            String ruta = controlador.exportarReporte();
+            JOptionPane.showMessageDialog(this, "Listo, el reporte se guardo en:\n" + ruta);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ups, no se pudo exportar: " + e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }
