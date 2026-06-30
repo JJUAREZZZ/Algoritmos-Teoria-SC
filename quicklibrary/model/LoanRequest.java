@@ -1,7 +1,7 @@
 package quicklibrary.model;
 
 import java.time.LocalDate;
-// clase que va a arepresntar una solicitud pendiente de prestamo
+// clase que va a representar una solicitud pendiente de prestamo
 public class LoanRequest implements Comparable<LoanRequest> {
     //atributos necesarios, como el codigo del estudiante, libro, nombre del estudiante 
     // y la fecha en la que se registra la solicitud
@@ -51,7 +51,7 @@ public class LoanRequest implements Comparable<LoanRequest> {
     // crea una solicitud a partir de una linea de csv guardada previamente
     public static LoanRequest fromCsv(String linea) {
         String[] partes = linea.split(",", -1);
-        // si la linea no tiene los compos neceario se descarta
+        // si la linea no tiene los campos necearios se descarta
         if (partes.length < 4)  return null;
 
         LocalDate fecha;
