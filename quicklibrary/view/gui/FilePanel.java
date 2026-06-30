@@ -108,6 +108,39 @@ public class FilePanel extends JPanel {
     }
     
     private void exportarReporte() {
+        JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Guardar reporte");
+        selector.setSelectedFile(new File("reporte_quicklibrary.txt"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivo de texto (*.txt)", "txt"));
+        int opcion = selector.showSaveDialog(this);
+        if (opcion != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            String ruta = controlador.exportarReporteEn(selector.getSelectedFile());
+            registrarLog("Reporte exportado: " + ruta);
+            JOptionPane.showMessageDialog(this, "Reporte exportado correctamente en:\n" + ruta);
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
+    }
+
+    private void exportarLibros() {
+        JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Guardar libros");
+        selector.setSelectedFile(new File("libros_exportados.csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        int opcion = selector.showSaveDialog(this);
+        if (opcion != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            String ruta = controlador.exportarLibrosEn(selector.getSelectedFile());
+            registrarLog("Libros exportados: " + ruta);
+            JOptionPane.showMessageDialog(this, "Libros exportados correctamente en:\n" + ruta);
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
     }
     
     private void exportarHistorial() {
