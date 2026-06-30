@@ -36,16 +36,13 @@ public class ReportPanel extends JPanel {
         panelBotones.setBackground(Color.WHITE);
 
         JButton btnActualizar = crearBotonEstilizado("Actualizar reporte", new Color(52, 152, 219));
-        JButton btnExportar = crearBotonEstilizado("Exportar reporte TXT", new Color(155, 89, 182));
-
+        
         panelBotones.add(btnActualizar);
-        panelBotones.add(btnExportar);
 
         add(scrollReporte, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
 
         btnActualizar.addActionListener(e -> actualizarReporte());
-        btnExportar.addActionListener(e -> exportarReporte());
     }
 
     private JButton crearBotonEstilizado(String texto, Color fondo) {
