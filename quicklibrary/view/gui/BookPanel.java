@@ -71,3 +71,10 @@ public class BookPanel extends JPanel {
         txtCodigoEstudiante = new JTextField();
         txtNombreEstudiante = new JTextField();
         txtCodigoLibro = new JTextField();
+
+        panelCampos.add(new JLabel("Codigo estudiante:"));
+        panelCampos.add(txtCodigoEstudiante);
+        panelCampos.add(new JLabel("Nombre estudiante:"));
+        panelCampos.add(txtNombreEstudiante);
+        panelCampos.add(new JLabel("Codigo libro:"));
+        panelCampos.add(txtCodigoLibro);
