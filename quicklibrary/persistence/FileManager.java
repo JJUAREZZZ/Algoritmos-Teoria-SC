@@ -15,8 +15,12 @@ import quicklibrary.structures.list.CustomLinkedList;
 public class FileManager {
   public void exportarReporteTxt(String contenidoReporte, File destino) throws IOException {
     BufferedWriter escritor = null;
-    escritor = new BufferedWriter(new FileWriter(destino));
-    escritor.write(contenidoReporte);
+    try{
+      escritor = new BufferedWriter(new FileWriter(destino));
+      escritor.write(contenidoReporte);
+    } finally {
+      cerrarEscritor(escritor);
+    }
   }
 
   public void exportarLibrosCsv(CustomLinkedList<Book> libros, File destino) throws IOException {
@@ -39,7 +43,7 @@ public class FileManager {
     try {
       escritor.write("codigoEstudiante, nombreEstudiante, codigoLibro, tituloLibro, fechaSolicitud, fechaAtencion, resultado\n");
       int i;
-      for (i = 0; i <= historial.size(); i++) {
+      for (i = 0; i < historial.size(); i++) {
         escritor.write(historial.get(i).toCsv();
         escritor.newLine();
       }
@@ -56,6 +60,7 @@ public class FileManager {
       int i;
       for (i = 0; i < solicitudes.size(); i++) {
         escritor.write(solicitudes.get(i).toCsv());
+        escritor.newLine();
       }
     } finally {
       cerrarEscritor(escritor);
@@ -69,12 +74,12 @@ public class FileManager {
       lector = new BufferedReader(new FileReader(origen));
       String linea;
       while((linea = lector.readLine()) != null) {
-        if (linea.startsWith("codigo, ")) {
+        if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
           continue;
         }
         Book libro = Book.fromCsv(linea);
         if (libro != null) {
-          libros.addFirst(libro);
+          libros.addLast(libro);
         }
       }
     } finally {
@@ -84,7 +89,24 @@ public class FileManager {
   }
 
   public CustomLinkedList<Book> cargarLibrosCsv(File origen) throws IOException {
-    return importarLibrosCsv(origen); 
+    CustomLinkedList<Book> libros = new CustomLinkedList<Book>();
+    BufferedReader lector = null;
+    try {
+        lector = new BufferedReader(new FileReader(origen));
+        String linea;
+        while ((linea = lector.readLine()) != null) {
+            if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
+                continue;
+            }
+            Book libro = Book.fromCsv(linea);
+            if (libro != null) {
+                libros.addLast(libro);
+            }
+        }
+    } finally {
+        cerrarLector(lector);
+    }
+    return libros;
   }
   
   public CustomLinkedList<LoanRequest> cargarSolicitudesCsv(File origen) throws IOException {
@@ -94,6 +116,9 @@ public class FileManager {
       lector = new BufferedReader(new FileReader(origen));
       String linea;
       while ((linea = lector.readLine()) != null) {
+        if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
+          continue;
+        }
         LoanRequest solicitud = LoanRequest.fromCsv(linea);
         if (solicitud != null) {
           solicitudes.addLast(solicitud);
@@ -116,7 +141,9 @@ public class FileManager {
           continue;
         }
         LoanRecord registro = LoanRecord.fromCsv(linea);
-        historial.addLast(registro); 
+        if (registro != null) {
+          historial.addLast(registro); 
+        }
       }
     } finally {
       cerrarLector(lector);
@@ -125,10 +152,18 @@ public class FileManager {
   }
   
   public void guardarLibrosCsv(CustomLinkedList<Book> libros, File destino) {
+    BufferedWriter escritor = null;
     try {
-      exportarLibrosCsv(libros, destino);
+      escritor = new BufferedWriter(new FileWriter(destino));
+      escritor.write("codigo,titulo,autor,categoria,anio,estado\n");
+      for (i = 0; i < libros.size(); i++) {
+        escritor.write(libros.get(i).toCvs());
+        escritor.newLine();
+      }
     } catch (IOException e) {
       System.out.println("No se pudo guardar libros: " + e.getMessage());
+    } finally {
+      cerrarEscritor(Escritor);
     }
   }
   
