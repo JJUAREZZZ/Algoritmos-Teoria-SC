@@ -66,3 +66,8 @@ public class BookPanel extends JPanel {
  private void crearFormulario() {
         JPanel panelPrincipal = new JPanel(new BorderLayout(8, 8));
         panelPrincipal.setBorder(BorderFactory.createTitledBorder("Solicitudes y prestamos"));
+
+        JPanel panelCampos = new JPanel(new GridLayout(3, 2, 6, 6));
+        txtCodigoEstudiante = new JTextField();
+        txtNombreEstudiante = new JTextField();
+        txtCodigoLibro = new JTextField();
