@@ -26,24 +26,24 @@ public class LoanRequest implements Comparable<LoanRequest> {
         return this.codigoEstudiante.compareToIgnoreCase(otraSolicitud.codigoEstudiante);
     }
     // retorna el codigo del estudiante
-    public String getCodigoEstudiante()  return codigoEstudiante;
+    public String getCodigoEstudiante()  {return codigoEstudiante;}
     // devuelve el nombre del estudiante
-    public String getNombreEstudiante()   return nombreEstudiante;
+    public String getNombreEstudiante()  { return nombreEstudiante;}
     // retorna el codigo del libro solicitado
-    public String getCodigoLibro()  return codigoLibro;
+    public String getCodigoLibro()  {return codigoLibro;}
     
     // Devuelve la fecha en la que se registro la solicitud
-    public LocalDate getFechaSolicitud()  return fechaSolicitud;
+    public LocalDate getFechaSolicitud()  {return fechaSolicitud;}
 
     @Override
     public String toString() {
         return codigoEstudiante + " - " + nombreEstudiante + " solicita " + codigoLibro + " (" + fechaSolicitud + ")";
     }
-
+    // convierte la solicitud a formato csv para guardarlo en el archivo
     public String toCsv() {
         return limpiarCsv(codigoEstudiante) + "," + limpiarCsv(nombreEstudiante) + "," + limpiarCsv(codigoLibro) + "," + fechaSolicitud;
     }
-
+    // limpia los textos antes de guardarlos en el csv
     private String limpiarCsv(String texto) {
         if (texto == null)  return "";
         return texto.replace(",", " ").trim();
@@ -55,8 +55,8 @@ public class LoanRequest implements Comparable<LoanRequest> {
         if (partes.length < 4)  return null;
 
         LocalDate fecha;
-// se intenta leer la fecha guardada
-// si falla se usa la fecha actual
+        // se intenta leer la fecha guardada
+        // si falla se usa la fecha actual
         try {
             fecha = LocalDate.parse(partes[3].trim());
         } catch (Exception e) {
