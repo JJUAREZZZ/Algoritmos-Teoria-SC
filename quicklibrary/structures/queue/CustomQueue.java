@@ -1,6 +1,8 @@
 package quicklibrary.structures.queue;
+
+import quicklibrary.structures.list.CustomLinkedList;
 //definimos una cola custom con atributos front, rear y size
-public class CustomQueue<T> {
+public class CustomQueue<T extends Comparable<T>>  {
     private QueueNode<T> front;
     private QueueNode<T> rear;
     private int size;
@@ -12,9 +14,11 @@ public class CustomQueue<T> {
     }
 // se define el metodo para poder encolar (agregar elemento al final de la cola)
     public void enqueue(T value) {
+       if (dato == null)  return;
         QueueNode<T> newNode = new QueueNode<T>(value);
         if (isEmpty()) { 
-            front = newNode; // eseta linea es para el primer elemento
+            front = newNode;// eseta linea es para el primer elemento
+            rear = newNode;
         } else {
             rear.next = newNode; //vuelve a enlazar el final del ultimo nodo
         }
