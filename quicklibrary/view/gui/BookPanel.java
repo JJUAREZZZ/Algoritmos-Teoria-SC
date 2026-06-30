@@ -156,3 +156,9 @@ private void atenderSolicitud() {
         JOptionPane.showMessageDialog(this, resultado);
         actualizarTodo();
     }
+    
+ private void limpiarCampos() {
+        txtCodigoEstudiante.setText("");
+        txtNombreEstudiante.setText("");
+        txtCodigoLibro.setText("");
+    }
