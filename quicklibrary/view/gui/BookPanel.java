@@ -141,3 +141,12 @@ private void registrarSolicitud() {
             mostrarError(e.getMessage());
         }
     }
+
+private void mostrarSiguiente() {
+        LoanRequest solicitud = controlador.consultarSiguienteSolicitud();
+        if (solicitud == null) {
+            JOptionPane.showMessageDialog(this, "No hay solicitudes pendientes.");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Siguiente solicitud:\n" + solicitud.toString());
+    }
