@@ -43,6 +43,21 @@ public class LibraryController {
         cargarHistorial();
     }
 
+
+
+
+    
+    public void registrarSolicitud(String codigoEstudiante, String nombreEstudiante, String codigoLibro)
+            throws ValidationException {
+        String codigoEstudianteLimpio = validarTexto(codigoEstudiante, "codigo del estudiante");
+        String nombreEstudianteLimpio = validarTexto(nombreEstudiante, "nombre del estudiante");
+        String codigoLibroLimpio = validarTexto(codigoLibro, "codigo del libro");
+        LoanRequest solicitud = new LoanRequest(codigoEstudianteLimpio, nombreEstudianteLimpio,
+                codigoLibroLimpio, LocalDate.now());
+        colaSolicitudes.enqueue(solicitud);
+        guardarSolicitudes();
+    }
+
     public String atenderSiguienteSolicitud() {
         // se obtiene la primera solicitud de la cola sin retirarla todavia
         LoanRequest solicitud = colaSolicitudes.peek();
