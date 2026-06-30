@@ -109,16 +109,15 @@ public class LibraryController {
         return "Devolucion registrada correctamente para el libro: " + libro.getTitulo() + ".";
     return " ";
     }
-
     public CustomLinkedList<LoanRecord> obtenerHistorialPrestamos() {
-
+        return historialPrestamos.toList()
     }
     public int contarSolicitudesPendientes() {
         return colaSolicitudes.size();
     }
 
     public int contarHistorial() {
-
+        return hisorialPrestamos.size();
     }
     
     private Book buscarLibroPorCodigoSinExcepcion(String codigo) {
