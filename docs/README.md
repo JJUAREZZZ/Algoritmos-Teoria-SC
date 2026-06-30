@@ -115,35 +115,6 @@ javac -d bin src/main/java/*/*.java
 java -cp bin interfaz.Main
 ```
 
----
-
-## 📊 Menú Principal
-
-```
-QUICKLIBRARY
-1. Registrar libro
-2. Mostrar libros
-3. Buscar libro por código
-4. Buscar libros por categoría
-5. Modificar libro
-6. Eliminar libro
-7. Registrar solicitud de préstamo
-8. Mostrar cola de solicitudes
-9. Atender siguiente solicitud
-10. Registrar devolución
-11. Mostrar reporte
-12. Salir
-```
-
----
-
-## 📦 Datos Iniciales
-
-El sistema trabaja con mínimo 30 libros. Pueden ingresarse:
-- Directamente desde el programa
-- Desde archivo CSV (`datos/libros.csv`)
-- Manualmente mediante el menú
-
 
 
 
