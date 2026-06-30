@@ -40,3 +40,7 @@ public class BookPanel extends JPanel {
             public boolean isCellEditable(int fila, int columna) {
                 return false;
             }
+
+        };
+        tablaSolicitudes = new JTable(modeloSolicitudes);
+        tablaSolicitudes.setRowHeight(24);
