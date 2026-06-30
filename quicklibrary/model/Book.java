@@ -16,6 +16,7 @@ public class Book implements Comparable<Book> {
         this.anio = anio;
         this.estado = estado;
     }
+
     public String getCodigo() {
         return codigo;
     }
@@ -63,7 +64,8 @@ public class Book implements Comparable<Book> {
     public boolean estaDisponible() {
         return this.estado == BookStatus.DISPONIBLE;
     }
-        @Override
+
+    @Override
     public int compareTo(Book otroLibro) {
         if (otroLibro == null) {
             return 1;
@@ -102,4 +104,5 @@ public class Book implements Comparable<Book> {
         }
         return texto.replace(",", " ").trim();
     }
+}
 
