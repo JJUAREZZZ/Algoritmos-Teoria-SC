@@ -2,7 +2,7 @@ package quicklibrary.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LoahocalDate;
 
 import quicklibrary.exception.BookNotFoundException;
 import quicklibrary.exception.DuplicateKeyException;
@@ -104,17 +104,8 @@ public class LibraryController {
         return arbolLibros.searchOrNull(llave);
     }
 
-    public CustomLinkedList<Book> obtenerLibrosDisponibles() {
-        CustomLinkedList<Book> todos = obtenerTodosLibros();
-        CustomLinkedList<Book> resultado = new CustomLinkedList<Book>();
-        int i;
-        for (i = 0; i < todos.size(); i++) {
-            Book libro = todos.get(i);
-            if (libro.getEstado() == BookStatus.DISPONIBLE) {
-                resultado.addLast(libro);
-            }
-        }
-        return resultado;
+    public CustomLinkedList<Book> obtenerTodosLibros() {
+        return arbolLibros.inOrder();
     }
     
     public CustomLinkedList<Book> obtenerLibrosDisponibles() {
