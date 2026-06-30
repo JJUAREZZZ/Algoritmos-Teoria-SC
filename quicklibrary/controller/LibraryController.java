@@ -59,10 +59,6 @@ public class LibraryController {
         guardarSolicitudes();
     }
 
-    public CustomLinkedList<LoanRequest> obtenerSolicitudesPendientes() {
-
-    }
-
     public String atenderSiguienteSolicitud() {
         // se obtiene la primera solicitud de la cola sin retirarla todavia
         LoanRequest solicitud = colaSolicitudes.peek();
@@ -96,6 +92,10 @@ public class LibraryController {
         guardarSolicitudes();
         guardarHistorial();
         return resultado;
+    }
+
+    public CustomLinkedList<LoanRequest> obtenerSolicitudesPendientes() {
+        return colaSolicitudes.toList(); // retorna una lista con las solicitudes que aun se encuentran en la cola
     }
 
     public String registrarDevolucion(String codigoLibro) throws ValidationException, BookNotFoundException {
