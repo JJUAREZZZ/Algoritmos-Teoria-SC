@@ -58,3 +58,8 @@ public class BookPanel extends JPanel {
         scrollSolicitudes.setBorder(BorderFactory.createTitledBorder("Cola de solicitudes pendientes"));
         JScrollPane scrollHistorial = new JScrollPane(tablaHistorial);
         scrollHistorial.setBorder(BorderFactory.createTitledBorder("Historial de prestamos atendidos (pila)"));
+
+       JSplitPane separador = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollSolicitudes, scrollHistorial);
+        separador.setResizeWeight(0.55);
+        add(separador, BorderLayout.CENTER);
+    }
