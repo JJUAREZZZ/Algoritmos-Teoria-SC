@@ -92,3 +92,27 @@ public class FilePanel extends JPanel {
         btnExportarSolicitudes.addActionListener(e -> exportarSolicitudes());
         btnImportarLibros.addActionListener(e -> importarLibros());
     }
+
+    private JButton crearBotonEstilizado(String texto, Color fondo) {
+    }
+    
+    private void exportarReporte() {
+    }
+    
+    private void exportarHistorial() {
+    }
+
+    private void exportarSolicitudes() {
+    }
+
+    private void importarLibros() {
+    }
+
+    private void registrarLog(String mensaje) {
+    }
+
+    private void mostrarError(String mensaje) {
+    }
+}
+
+    
