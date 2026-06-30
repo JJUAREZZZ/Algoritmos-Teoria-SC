@@ -25,3 +25,11 @@ public class LoanPanel extends JPanel {
     private JTextField txtCodigoEstudiante;
     private JTextField txtNombreEstudiante;
     private JTextField txtCodigoLibro;
+
+ public LoanPanel(LibraryController controlador) {
+        this.controlador = controlador;
+        setLayout(new BorderLayout(10, 10));
+        crearTablas();
+        crearFormulario();
+        actualizarTodo();
+    }
