@@ -50,3 +50,6 @@ public class BookPanel extends JPanel {
             public boolean isCellEditable(int fila, int columna) {
                 return false;
             }
+  };
+        tablaHistorial = new JTable(modeloHistorial);
+        tablaHistorial.setRowHeight(24);
