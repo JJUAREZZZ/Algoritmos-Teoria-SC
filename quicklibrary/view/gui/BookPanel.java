@@ -163,7 +163,7 @@ private void atenderSolicitud() {
         txtCodigoLibro.setText("");
     }
 
-    private void MostrarError(String mensaje) {
+    private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
     }
 }
