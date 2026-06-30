@@ -4,7 +4,7 @@ import quicklibrary.exception.BookNotFoundException;
 import quicklibrary.exception.DuplicateKeyException;
 import quicklibrary.structures.list.CustomLinkedList;
 
-public class CustomAVLTree<T extends Comparable<T>>
+public class CustomAVLTree<T extends Comparable<T>> {
     private AVLNode<T> raiz;
     private int cantidad;
 
@@ -27,7 +27,7 @@ public class CustomAVLTree<T extends Comparable<T>>
         }
         raiz = insertarRecursivo(raiz, dato);
     }
-    
+
     private AVLNode<T> insertarRecursivo(AVLNode<T> nodo, T dato) throws DuplicateKeyException {
         if (nodo == null) {
             cantidad++;
@@ -46,7 +46,7 @@ public class CustomAVLTree<T extends Comparable<T>>
         actualizarAltura(nodo);
         return balancear(nodo);
     }
-    
+
     public T search(T dato) throws BookNotFoundException {
         AVLNode<T> encontrado = buscarNodo(raiz, dato);
         if (encontrado == null) {
@@ -81,14 +81,14 @@ public class CustomAVLTree<T extends Comparable<T>>
         if (dato == null) {
             return;
         }
-        raiz = eliminarRecursivo(raiz, dato); 
+        raiz = eliminarRecursivo(raiz, dato);
     }
 
     private AVLNode<T> eliminarRecursivo(AVLNode<T> nodo, T dato) throws BookNotFoundException {
         if (nodo == null) {
             throw new BookNotFoundException("No se encontro el elemento para eliminar.");
         }
-        
+
         int comparacion = dato.compareTo(nodo.dato);
         if (comparacion < 0) {
             nodo.izquierda = eliminarRecursivo(nodo.izquierda, dato);
@@ -107,7 +107,7 @@ public class CustomAVLTree<T extends Comparable<T>>
             } else {
                 AVLNode<T> sucesor = encontrarMenor(nodo.derecha);
                 nodo.dato = sucesor.dato;
-                node.derecha = eliminarSucesor(nodo.derecha, sucesor.dato);
+                nodo.derecha = eliminarSucesor(nodo.derecha, sucesor.dato);
             }
         }
         actualizarAltura(nodo);
@@ -252,5 +252,9 @@ public class CustomAVLTree<T extends Comparable<T>>
         if (nodo.izquierda != null) {
             construirTexto(nodo.izquierda, prefijo + (esUltimo ? "    " : "│   "), true, sb);
         }
+    }
+
+    public AVLNode<T> getRaiz() {
+        return this.raiz;
     }
 }
