@@ -85,11 +85,15 @@ public class LibraryController {
 
     public void eliminarLibro(String codigo) throws ValidationException, BookNotFoundException {
         String codigoLimpio = validarTexto(codigo, "codigo");
+        Book libro = buscarLibroPorCodigo(codigoLimpio);
+        if (libro.getEstado() == BookStatus.PRESTADO) {
+            throw new ValidationException("No se puede eliminar el libro porque esta prestado actualmente.");
+        }
         Book llave = new Book(codigoLimpio, "", "", "", 0, BookStatus.DISPONIBLE);
         arbolLibros.delete(llave);
         guardarLibros();
     }
-
+    
     public Book buscarLibroPorCodigo(String codigo) throws ValidationException, BookNotFoundException {
         String codigoLimpio = validarTexto(codigo, "codigo");
         Book llave = new Book(codigoLimpio, "", "", "", 0, BookStatus.DISPONIBLE);
@@ -189,8 +193,21 @@ public class LibraryController {
     public void registrarSolicitud(String codigoEstudiante, String nombreEstudiante, String codigoLibro)
             throws ValidationException {
         String codigoEstudianteLimpio = validarTexto(codigoEstudiante, "codigo del estudiante");
+        if (!codigoEstudianteLimpio.matches("\\d+")) {
+            throw new ValidationException("El codigo del estudiante debe ser completamente numerico.");
+        }
         String nombreEstudianteLimpio = validarTexto(nombreEstudiante, "nombre del estudiante");
         String codigoLibroLimpio = validarTexto(codigoLibro, "codigo del libro");
+        if (buscarLibroPorCodigoSinExcepcion(codigoLibroLimpio) == null) {
+            throw new ValidationException("El libro con el codigo ingresado no existe en el catalogo.");
+        }
+        CustomLinkedList<LoanRequest> pendientes = obtenerSolicitudesPendientes();
+        for (int i = 0; i < pendientes.size(); i++) {
+            LoanRequest r = pendientes.get(i);
+            if (r.getCodigoEstudiante().equals(codigoEstudianteLimpio) && r.getCodigoLibro().equals(codigoLibroLimpio)) {
+                throw new ValidationException("Este estudiante ya tiene una solicitud pendiente para este mismo libro.");
+            }
+        }
         LoanRequest solicitud = new LoanRequest(codigoEstudianteLimpio, nombreEstudianteLimpio,
                 codigoLibroLimpio, LocalDate.now());
         colaSolicitudes.enqueue(solicitud);
