@@ -130,3 +130,14 @@ private void actualizarSolicitudes() {
             modeloHistorial.addRow(fila);
         }
     }
+
+private void registrarSolicitud() {
+        try {
+            controlador.registrarSolicitud(txtCodigoEstudiante.getText(), txtNombreEstudiante.getText(), txtCodigoLibro.getText());
+            JOptionPane.showMessageDialog(this, "Solicitud registrada en la cola.");
+            limpiarCampos();
+            actualizarTodo();
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
+    }
