@@ -94,6 +94,17 @@ public class FilePanel extends JPanel {
     }
 
     private JButton crearBotonEstilizado(String texto, Color fondo) {
+        JButton boton = new JButton(texto);
+        boton.setBackground(fondo);
+        boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        boton.setFocusPainted(false);
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(fondo.darker(), 1, true),
+                BorderFactory.createEmptyBorder(8, 12, 8, 12)
+        ));
+        return boton;
     }
     
     private void exportarReporte() {
