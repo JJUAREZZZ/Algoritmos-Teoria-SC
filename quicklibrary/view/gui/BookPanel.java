@@ -53,3 +53,8 @@ public class BookPanel extends JPanel {
   };
         tablaHistorial = new JTable(modeloHistorial);
         tablaHistorial.setRowHeight(24);
+
+        JScrollPane scrollSolicitudes = new JScrollPane(tablaSolicitudes);
+        scrollSolicitudes.setBorder(BorderFactory.createTitledBorder("Cola de solicitudes pendientes"));
+        JScrollPane scrollHistorial = new JScrollPane(tablaHistorial);
+        scrollHistorial.setBorder(BorderFactory.createTitledBorder("Historial de prestamos atendidos (pila)"));
