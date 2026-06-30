@@ -143,20 +143,65 @@ public class FilePanel extends JPanel {
         }
     }
     
-    private void exportarHistorial() {
+     private void exportarHistorial() {
+        JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Guardar historial");
+        selector.setSelectedFile(new File("historial_exportado.csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        int opcion = selector.showSaveDialog(this);
+        if (opcion != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            String ruta = controlador.exportarHistorialEn(selector.getSelectedFile());
+            registrarLog("Historial exportado: " + ruta);
+            JOptionPane.showMessageDialog(this, "Historial exportado correctamente en:\n" + ruta);
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
     }
 
     private void exportarSolicitudes() {
+        JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Guardar solicitudes pendientes");
+        selector.setSelectedFile(new File("solicitudes_exportadas.csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        int opcion = selector.showSaveDialog(this);
+        if (opcion != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            String ruta = controlador.exportarSolicitudesEn(selector.getSelectedFile());
+            registrarLog("Solicitudes exportadas: " + ruta);
+            JOptionPane.showMessageDialog(this, "Solicitudes exportadas correctamente en:\n" + ruta);
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
     }
 
     private void importarLibros() {
+        JFileChooser selector = new JFileChooser();
+        selector.setDialogTitle("Seleccionar archivo CSV de libros");
+        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        int opcion = selector.showOpenDialog(this);
+        if (opcion != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            int cantidad = controlador.importarLibrosDesdeCsv(selector.getSelectedFile());
+            registrarLog("Importación desde: " + selector.getSelectedFile().getAbsolutePath()
+                    + " - Libros importados: " + cantidad);
+            JOptionPane.showMessageDialog(this, "Importación completada. Libros nuevos agregados: " + cantidad);
+        } catch (Exception e) {
+            mostrarError(e.getMessage());
+        }
     }
 
     private void registrarLog(String mensaje) {
+        areaLog.append(mensaje + "\n");
     }
 
     private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
     }
 }
-
-    
