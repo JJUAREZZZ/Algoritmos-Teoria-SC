@@ -107,3 +107,15 @@ public class BookPanel extends JPanel {
         actualizarSolicitudes();
         actualizarHistorial();
     }
+
+private void actualizarSolicitudes() {
+        modeloSolicitudes.setRowCount(0);
+        CustomLinkedList<LoanRequest> solicitudes = controlador.obtenerSolicitudesPendientes();
+        int i;
+        for (i = 0; i < solicitudes.size(); i++) {
+            LoanRequest solicitud = solicitudes.get(i);
+            Object[] fila = {solicitud.getCodigoEstudiante(), solicitud.getNombreEstudiante(),
+                    solicitud.getCodigoLibro(), solicitud.getFechaSolicitud()};
+            modeloSolicitudes.addRow(fila);
+        }
+    }
