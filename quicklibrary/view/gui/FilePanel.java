@@ -29,7 +29,7 @@ public class FilePanel extends JPanel {
         panelExportar.setBackground(Color.WHITE);
         panelExportar.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
-                "Exportar Datos", TitledBorder.LEFT, TitledBorder.TOP, 
+                "Exportar datos", TitledBorder.LEFT, TitledBorder.TOP, 
                 new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
 
         JButton btnExportarReporte = crearBotonEstilizado("Exportar reporte TXT", new Color(155, 89, 182));   
@@ -46,7 +46,7 @@ public class FilePanel extends JPanel {
         panelImportar.setBackground(Color.WHITE);
         panelImportar.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
-                "Importar Datos", TitledBorder.LEFT, TitledBorder.TOP, 
+                "Importar datos", TitledBorder.LEFT, TitledBorder.TOP, 
                 new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
 
         JButton btnImportarLibros = crearBotonEstilizado("Importar libros desde CSV", new Color(26, 188, 156)); 
@@ -57,7 +57,7 @@ public class FilePanel extends JPanel {
         panelAgrupadoControles.add(panelExportar, BorderLayout.NORTH);
         panelAgrupadoControles.add(panelImportar, BorderLayout.CENTER);
 
-        JLabel etiquetaInfo = new JLabel("Formatos admitidos: CSV para datos, TXT para reporte.");
+        JLabel etiquetaInfo = new JLabel("Formatos: CSV para datos y TXT para el reporte");
         etiquetaInfo.setFont(new Font("Segoe UI", Font.ITALIC, 11));
         etiquetaInfo.setForeground(new Color(127, 140, 141));
         etiquetaInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -79,7 +79,7 @@ public class FilePanel extends JPanel {
         panelLog.setBackground(Color.WHITE);
         panelLog.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
-                "Registro de Operaciones en Tiempo Real", TitledBorder.LEFT, TitledBorder.TOP, 
+                "Historial de operaciones", TitledBorder.LEFT, TitledBorder.TOP, 
                 new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
         panelLog.add(scrollLog, BorderLayout.CENTER);
 
@@ -111,15 +111,15 @@ public class FilePanel extends JPanel {
         JFileChooser selector = new JFileChooser();
         selector.setDialogTitle("Guardar reporte");
         selector.setSelectedFile(new File("reporte_quicklibrary.txt"));
-        selector.setFileFilter(new FileNameExtensionFilter("Archivo de texto (*.txt)", "txt"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivos de texto", "txt"));
         int opcion = selector.showSaveDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
             return;
         }
         try {
             String ruta = controlador.exportarReporteEn(selector.getSelectedFile());
-            registrarLog("Reporte exportado: " + ruta);
-            JOptionPane.showMessageDialog(this, "Reporte exportado correctamente en:\n" + ruta);
+            registrarLog("Reporte creado en: " + ruta);
+            JOptionPane.showMessageDialog(this, "Se guardo el reporte en:\n" + ruta);
         } catch (Exception e) {
             mostrarError(e.getMessage());
         }
@@ -129,15 +129,15 @@ public class FilePanel extends JPanel {
         JFileChooser selector = new JFileChooser();
         selector.setDialogTitle("Guardar libros");
         selector.setSelectedFile(new File("libros_exportados.csv"));
-        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivos CSV", "csv"));
         int opcion = selector.showSaveDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
             return;
         }
         try {
             String ruta = controlador.exportarLibrosEn(selector.getSelectedFile());
-            registrarLog("Libros exportados: " + ruta);
-            JOptionPane.showMessageDialog(this, "Libros exportados correctamente en:\n" + ruta);
+            registrarLog("Libros guardados en: " + ruta);
+            JOptionPane.showMessageDialog(this, "Libros guardados en:\n" + ruta);
         } catch (Exception e) {
             mostrarError(e.getMessage());
         }
@@ -147,15 +147,15 @@ public class FilePanel extends JPanel {
         JFileChooser selector = new JFileChooser();
         selector.setDialogTitle("Guardar historial");
         selector.setSelectedFile(new File("historial_exportado.csv"));
-        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivos CSV", "csv"));
         int opcion = selector.showSaveDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
             return;
         }
         try {
             String ruta = controlador.exportarHistorialEn(selector.getSelectedFile());
-            registrarLog("Historial exportado: " + ruta);
-            JOptionPane.showMessageDialog(this, "Historial exportado correctamente en:\n" + ruta);
+            registrarLog("Historial creado en: " + ruta);
+            JOptionPane.showMessageDialog(this, "Historial guardado en:\n" + ruta);
         } catch (Exception e) {
             mostrarError(e.getMessage());
         }
@@ -163,17 +163,17 @@ public class FilePanel extends JPanel {
 
     private void exportarSolicitudes() {
         JFileChooser selector = new JFileChooser();
-        selector.setDialogTitle("Guardar solicitudes pendientes");
+        selector.setDialogTitle("Guardar solicitudes");
         selector.setSelectedFile(new File("solicitudes_exportadas.csv"));
-        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        selector.setFileFilter(new FileNameExtensionFilter("Archivos CSV", "csv"));
         int opcion = selector.showSaveDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
             return;
         }
         try {
             String ruta = controlador.exportarSolicitudesEn(selector.getSelectedFile());
-            registrarLog("Solicitudes exportadas: " + ruta);
-            JOptionPane.showMessageDialog(this, "Solicitudes exportadas correctamente en:\n" + ruta);
+            registrarLog("Solicitudes listas en: " + ruta);
+            JOptionPane.showMessageDialog(this, "Se guardaron las solicitudes en:\n" + ruta);
         } catch (Exception e) {
             mostrarError(e.getMessage());
         }
@@ -181,17 +181,17 @@ public class FilePanel extends JPanel {
 
     private void importarLibros() {
         JFileChooser selector = new JFileChooser();
-        selector.setDialogTitle("Seleccionar archivo CSV de libros");
-        selector.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
+        selector.setDialogTitle("Cargar archivo de libros");
+        selector.setFileFilter(new FileNameExtensionFilter("Archivos CSV", "csv"));
         int opcion = selector.showOpenDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
             return;
         }
         try {
             int cantidad = controlador.importarLibrosDesdeCsv(selector.getSelectedFile());
-            registrarLog("Importación desde: " + selector.getSelectedFile().getAbsolutePath()
-                    + " - Libros importados: " + cantidad);
-            JOptionPane.showMessageDialog(this, "Importación completada. Libros nuevos agregados: " + cantidad);
+            registrarLog("Importado desde: " + selector.getSelectedFile().getAbsolutePath()
+                    + " - libros nuevos: " + cantidad);
+            JOptionPane.showMessageDialog(this, "Listo, se se agregaron " + cantidad + " libros nuevos");
         } catch (Exception e) {
             mostrarError(e.getMessage());
         }
@@ -202,6 +202,6 @@ public class FilePanel extends JPanel {
     }
 
     private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.WARNING_MESSAGE);
     }
 }
