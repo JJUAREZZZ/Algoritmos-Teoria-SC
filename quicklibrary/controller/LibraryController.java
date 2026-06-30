@@ -47,14 +47,15 @@ public class LibraryController {
 
 
     
-    public void registrarSolicitud(String codigoEstudiante, String nombreEstudiante, String codigoLibro)
-            throws ValidationException {
+    public void registrarSolicitud(String codigoEstudiante, String nombreEstudiante, String codigoLibro) throws ValidationException {
+        // se necesitan validar y limpiar los datos necesarios para registrar la solicitud
         String codigoEstudianteLimpio = validarTexto(codigoEstudiante, "codigo del estudiante");
         String nombreEstudianteLimpio = validarTexto(nombreEstudiante, "nombre del estudiante");
         String codigoLibroLimpio = validarTexto(codigoLibro, "codigo del libro");
-        LoanRequest solicitud = new LoanRequest(codigoEstudianteLimpio, nombreEstudianteLimpio,
-                codigoLibroLimpio, LocalDate.now());
-        colaSolicitudes.enqueue(solicitud);
+        // se crea la solicitud con la fecha aactual del sistema
+        LoanRequest solicitud = new LoanRequest(codigoEstudianteLimpio, nombreEstudianteLimpio,codigoLibroLimpio, LocalDate.now());
+        
+        colaSolicitudes.enqueue(solicitud); // se agrega en la cola
         guardarSolicitudes();
     }
 
