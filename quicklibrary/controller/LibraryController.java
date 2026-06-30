@@ -337,6 +337,124 @@ public class LibraryController {
         return importados_ok;
     }
 
+    public String obtenerDibujoArbol() {
+        return arbolLibros.drawTree();
+    }
 
+    private String validarTexto(String texto, String campo) throws ValidationException {
+        if (texto == null || texto.trim().length() == 0) {
+            throw new ValidationException("El campo " + campo + " no puede estar vacio.");
+        }
+        return texto.trim();
+    }
+
+    private int validarAnio(String anioTexto) throws ValidationException {
+        String limpio = validarTexto(anioTexto, "anio");
+        int anio;
+        try {
+            anio = Integer.parseInt(limpio);
+        } catch (NumberFormatException e) {
+            throw new ValidationException("El anio debe ser numerico.");
+        }
+        int anioActual = LocalDate.now().getYear();
+        if (anio < 1000 || anio > anioActual + 1) {
+            throw new ValidationException("El anio ingresado no es valido.");
+        }
+        return anio;
+    }
+
+    private boolean contieneTexto(String textoCompleto, String textoBuscado) {
+        if (textoCompleto == null || textoBuscado == null) {
+            return false;
+        }
+        return textoCompleto.toLowerCase().contains(textoBuscado.toLowerCase());
+    }
+
+    private void cargarLibros() {
+        if (!archivoLibros.exists()) {
+            cargarDatosIniciales();
+            guardarLibros();
+            return;
+        }
+        BufferedReader lector = null;
+        try {
+            lector = new BufferedReader(new FileReader(archivoLibros));
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigo,")) {
+                    continue;
+                }
+                Book libro = Book.fromCsv(linea);
+                if (libro != null) {
+                    try {
+                        arbolLibros.insert(libro);
+                    } catch (DuplicateKeyException e) {
+                        // Si el archivo trae duplicados, se ignoran para conservar la clave unica.
+                    }
+                }
+            }
+        } catch (IOException e) {
+            cargarDatosIniciales();
+        } finally {
+            cerrarLector(lector);
+        }
+        if (arbolLibros.size() == 0) {
+            cargarDatosIniciales();
+            guardarLibros();
+        }
+    }
+
+    private void cargarSolicitudes() {
+        if (!archivoSolicitudes.exists()) {
+            return;
+        }
+        BufferedReader lector = null;
+        try {
+            lector = new BufferedReader(new FileReader(archivoSolicitudes));
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
+                    continue;
+                }
+                LoanRequest solicitud = LoanRequest.fromCsv(linea);
+                if (solicitud != null) {
+                    colaSolicitudes.enqueue(solicitud);
+                }
+            }
+        } catch (IOException e) {
+            // Si no se puede leer, simplemente inicia sin solicitudes.
+        } finally {
+            cerrarLector(lector);
+        }
+    }
+
+    private void cargarHistorial() {
+        if (!archivoHistorial.exists()) {
+            return;
+        }
+        CustomLinkedList<LoanRecord> temporal = new CustomLinkedList<LoanRecord>();
+        BufferedReader lector = null;
+        try {
+            lector = new BufferedReader(new FileReader(archivoHistorial));
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
+                    continue;
+                }
+                LoanRecord registro = LoanRecord.fromCsv(linea);
+                if (registro != null) {
+                    temporal.addLast(registro);
+                }
+            }
+        } catch (IOException e) {
+            // Sin historial si el archivo no se puede leer.
+        } finally {
+            cerrarLector(lector);
+        }
+        int i;
+        for (i = temporal.size() - 1; i >= 0; i--) {
+            historialPrestamos.push(temporal.get(i));
+        }
+    }
     }
 }
