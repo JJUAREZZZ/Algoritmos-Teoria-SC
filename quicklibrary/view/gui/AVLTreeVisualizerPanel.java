@@ -1,11 +1,9 @@
 package quicklibrary.view.gui;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import quicklibrary.controller.LibraryController;
+import quicklibrary.model.Book;
+import quicklibrary.structures.tree.AVLNode;
+import quicklibrary.structures.tree.CustomAVLTree;
