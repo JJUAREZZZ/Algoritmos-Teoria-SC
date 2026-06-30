@@ -44,3 +44,9 @@ public class BookPanel extends JPanel {
         };
         tablaSolicitudes = new JTable(modeloSolicitudes);
         tablaSolicitudes.setRowHeight(24);
+      String[] columnasHistorial = {"Fecha atencion", "Estudiante", "Libro", "Titulo", "Resultado"};
+        modeloHistorial = new DefaultTableModel(columnasHistorial, 0) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
