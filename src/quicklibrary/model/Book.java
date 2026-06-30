@@ -1,13 +1,14 @@
 package quicklibrary.model;
-
+//clase para represerta el libro de nuestra biblioteca 
 public class Book implements Comparable<Book> {
+    //atributos del libro
     private String codigo;
     private String titulo;
     private String autor;
     private String categoria;
     private int anio;
     private BookStatus estado;
-
+//Constructor para inicializar nuestrar variables
     public Book(String codigo, String titulo, String autor, String categoria, int anio, BookStatus estado) {
         this.codigo = codigo;
         this.titulo = titulo;
@@ -16,7 +17,7 @@ public class Book implements Comparable<Book> {
         this.anio = anio;
         this.estado = estado;
     }
-
+    //metodos que nos permiten modificar y que nos retornen el codigo, titulo, autor, categoria del libro
     public String getCodigo() {
         return codigo;
     }
@@ -24,7 +25,7 @@ public class Book implements Comparable<Book> {
     public String getTitulo() {
         return titulo;
     }
-
+    
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -32,7 +33,6 @@ public class Book implements Comparable<Book> {
     public String getAutor() {
         return autor;
     }
-
     public void setAutor(String autor) {
         this.autor = autor;
     }
