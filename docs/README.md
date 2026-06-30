@@ -144,22 +144,6 @@ El sistema trabaja con mínimo 30 libros. Pueden ingresarse:
 - Desde archivo CSV (`datos/libros.csv`)
 - Manualmente mediante el menú
 
----
-
-## 🧪 Pruebas Mínimas Requeridas
-
-1. ✓ Registro correcto de libro
-2. ✓ Rechazo de código duplicado
-3. ✓ Búsqueda de libro existente
-4. ✓ Búsqueda de libro inexistente
-5. ✓ Registro de 3 solicitudes
-6. ✓ Atención en orden FIFO
-7. ✓ Rechazo de préstamo a libro no disponible
-8. ✓ Devolución de libro
-9. ✓ Eliminación de libro
-10. ✓ Visualización de reporte
-
----
 
 
 
