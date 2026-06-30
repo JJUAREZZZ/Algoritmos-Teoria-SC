@@ -48,13 +48,15 @@ public class LoanRequest implements Comparable<LoanRequest> {
         if (texto == null)  return "";
         return texto.replace(",", " ").trim();
     }   
-
+    // crea una solicitud a partir de una linea de csv guardada previamente
     public static LoanRequest fromCsv(String linea) {
         String[] partes = linea.split(",", -1);
-        if (partes.length < 4) {
-            return null;
-        }
+        // si la linea no tiene los compos neceario se descarta
+        if (partes.length < 4)  return null;
+
         LocalDate fecha;
+// se intenta leer la fecha guardada
+// si falla se usa la fecha actual
         try {
             fecha = LocalDate.parse(partes[3].trim());
         } catch (Exception e) {
