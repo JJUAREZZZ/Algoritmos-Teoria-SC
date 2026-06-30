@@ -42,10 +42,6 @@ public class LibraryController {
         cargarSolicitudes();
         cargarHistorial();
     }
-
-
-
-
     
     public void registrarSolicitud(String codigoEstudiante, String nombreEstudiante, String codigoLibro) throws ValidationException {
         // se necesitan validar y limpiar los datos necesarios para registrar la solicitud
@@ -163,11 +159,71 @@ public class LibraryController {
                 arbolLibros.insert(importados.get(i));
                 importados_ok++;
             } catch (DuplicateKeyException e) {
-                // Controlado
+                // Se omiten los libros cuyo codigo ya existe en la biblioteca.
             }
+        }
+        if (importados_ok > 0) {
+            guardarLibros();
         }
         return importados_ok; 
     }
 
-    
+    public String obtenerDibujoArbol() {
+        return arbolLibros.drawTree();
+    }
+
+    private void cargarLibros() {
+        if (!archivoLibros.exists()) {
+            cargarDatosIniciales();
+            guardarLibros();
+            return;
+        }
+        try {
+            CustomLinkedList<Book> libros = gestorArchivos.cargarLibrosCsv(archivoLibros);
+            int i;
+            for (i = 0; i < libros.size(); i++) {
+                try {
+                    arbolLibros.insert(libros.get(i));
+                } catch (DuplicateKeyException e) {
+                    // Si el archivo trae duplicados, se ignoran para conservar la clave unica.
+                }
+            }
+        } catch (IOException e) {
+            cargarDatosIniciales();
+        }
+        if (arbolLibros.size() == 0) {
+            cargarDatosIniciales();
+            guardarLibros();
+        }
+    }
+
+    private void cargarSolicitudes() {
+        if (!archivoSolicitudes.exists()) {
+            return;
+        }
+        try {
+            CustomLinkedList<LoanRequest> solicitudes = gestorArchivos.cargarSolicitudesCsv(archivoSolicitudes);
+            int i;
+            for (i = 0; i < solicitudes.size(); i++) {
+                colaSolicitudes.enqueue(solicitudes.get(i));
+            }
+        } catch (IOException e) {
+            // Si no se puede leer, simplemente inicia sin solicitudes.
+        }
+    }
+
+    private void cargarHistorial() {
+        if (!archivoHistorial.exists()) {
+            return;
+        }
+        try {
+            CustomLinkedList<LoanRecord> temporal = gestorArchivos.cargarHistorialCsv(archivoHistorial);
+            int i;
+            for (i = temporal.size() - 1; i >= 0; i--) {
+                historialPrestamos.push(temporal.get(i));
+            }
+        } catch (IOException e) {
+            // Sin historial si el archivo no se puede leer.
+        }
+    }
 }
