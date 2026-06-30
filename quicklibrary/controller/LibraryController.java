@@ -43,6 +43,38 @@ public class LibraryController {
         cargarHistorial();
     }
 
+    public String atenderSiguienteSolicitud() {
+        LoanRequest solicitud = colaSolicitudes.peek();
+        if (solicitud == null) {
+            return "No existen solicitudes pendientes.";
+        }
+
+        Book libro = buscarLibroPorCodigoSinExcepcion(solicitud.getCodigoLibro());
+        String resultado;
+        String tituloLibro = "No encontrado";
+
+        if (libro == null) {
+            resultado = "Solicitud atendida: el libro con codigo " + solicitud.getCodigoLibro() + " no existe.";
+        } else if (!libro.estaDisponible()) {
+            tituloLibro = libro.getTitulo();
+            resultado = "Solicitud atendida: el libro '" + libro.getTitulo() + "' no esta disponible.";
+        } else {
+            tituloLibro = libro.getTitulo();
+            libro.setEstado(BookStatus.PRESTADO);
+            resultado = "Prestamo realizado correctamente para " + solicitud.getNombreEstudiante() +
+                    ". Libro: " + libro.getTitulo() + ".";
+        }
+
+        colaSolicitudes.dequeue();
+        LoanRecord registro = new LoanRecord(solicitud.getCodigoEstudiante(), solicitud.getNombreEstudiante(),
+                solicitud.getCodigoLibro(), tituloLibro, solicitud.getFechaSolicitud(), LocalDate.now(), resultado);
+        historialPrestamos.push(registro);
+        guardarLibros();
+        guardarSolicitudes();
+        guardarHistorial();
+        return resultado;
+    }
+
     public String exportarReporte() throws IOException {
         File archivoReporte = new File(carpetaDatos, "reporte_quicklibrary.txt");
         gestorArchivos.exportarReporteTxt(generarReporteTexto(), archivoReporte);
@@ -83,3 +115,6 @@ public class LibraryController {
         }
         return importados_ok; 
     }
+
+    
+}
