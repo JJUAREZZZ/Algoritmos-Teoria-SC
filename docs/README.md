@@ -161,14 +161,5 @@ El sistema trabaja con mínimo 30 libros. Pueden ingresarse:
 
 ---
 
-## ➕ Funcionalidades Opcionales
-
-- Persistencia mediante archivos
-- Interfaz gráfica (Swing/JavaFX)
-- Historial de préstamos (Pila)
-- Ordenamiento por título
-- Exportación de reportes
-- Árbol AVL balanceado
-- Pruebas unitarias con JUnit
 
 
