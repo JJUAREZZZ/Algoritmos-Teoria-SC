@@ -14,11 +14,10 @@ public class CustomQueue<T extends Comparable<T>>  {
     }
 // se define el metodo para poder encolar (agregar elemento al final de la cola)
     public void enqueue(T value) {
-       if (dato == null)  return;
+       if (value == null)  return;
         QueueNode<T> newNode = new QueueNode<T>(value);
         if (isEmpty()) { 
-            front = newNode;// eseta linea es para el primer elemento
-            rear = newNode;
+            front = newNode;// se establece el primer nodo de la cola
         } else {
             rear.next = newNode; //vuelve a enlazar el final del ultimo nodo
         }
