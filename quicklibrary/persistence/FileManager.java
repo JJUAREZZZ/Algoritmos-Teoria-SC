@@ -148,4 +148,41 @@ public class FileManager {
       cerrarEscritor(escritor);
     }
   }
+  
+  public void guardarHistorialCsv(CustomLinkedList<LoanRecord> historial, File destino) {
+    BufferedWriter escritor = null;
+    try {
+      escritor = new BufferedWriter(new FileWriter(destino));
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,tituloLibro,fechaSolicitud,fechaAtencion,resultado\n");
+      int i;
+      for (i = 0; i < historial.size(); i++) {
+        escritor.write(historial.get(i).toCsv());
+        escritor.newLine();
+      }
+    } catch (IOException e) {
+      System.out.println("No se pudo guardar historial: " + e.getMessage());
+    } finally {
+      cerrarEscritor(escritor);
+    }
+  }
+  
+  private void cerrarLector(BufferedReader lector) {
+    if (lector != null) {
+      try {
+        lector.close();
+      } catch (IOException e) {
+        // Cierre silencioso para no interrumpir la aplicacion.
+      }
+    }
+  }
+  
+  private void cerrarEscritor(BufferedWriter escritor) {
+    if (escritor != null) {
+      try {
+        escritor.close();
+      } catch (IOException e) {
+        // Cierre silencioso para no interrumpir la aplicacion.
+      }
+    }
+  }
 }  
