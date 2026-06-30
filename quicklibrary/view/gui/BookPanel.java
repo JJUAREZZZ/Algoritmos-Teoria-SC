@@ -103,3 +103,7 @@ public class BookPanel extends JPanel {
         btnLimpiar.addActionListener(e -> limpiarCampos());
     }
 
+ public void actualizarTodo() {
+        actualizarSolicitudes();
+        actualizarHistorial();
+    }
