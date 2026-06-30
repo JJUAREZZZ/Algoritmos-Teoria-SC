@@ -171,11 +171,4 @@ El sistema trabaja con mínimo 30 libros. Pueden ingresarse:
 - Árbol AVL balanceado
 - Pruebas unitarias con JUnit
 
----
-
-## 📚 Información del Proyecto
-
-**Materia:** Algoritmos y Estructuras de Datos  
-**Tipo:** Proyecto Corto  
-**Plazo:** 1 semana
 
