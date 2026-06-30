@@ -63,3 +63,6 @@ public class BookPanel extends JPanel {
         separador.setResizeWeight(0.55);
         add(separador, BorderLayout.CENTER);
     }
+ private void crearFormulario() {
+        JPanel panelPrincipal = new JPanel(new BorderLayout(8, 8));
+        panelPrincipal.setBorder(BorderFactory.createTitledBorder("Solicitudes y prestamos"));
