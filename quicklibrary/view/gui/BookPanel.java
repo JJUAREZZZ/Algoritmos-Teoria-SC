@@ -78,3 +78,10 @@ public class BookPanel extends JPanel {
         panelCampos.add(txtNombreEstudiante);
         panelCampos.add(new JLabel("Codigo libro:"));
         panelCampos.add(txtCodigoLibro);
+
+        JPanel panelBotones = new JPanel(new GridLayout(5, 1, 6, 6));
+        JButton btnRegistrar = new JButton("Registrar solicitud");
+        JButton btnSiguiente = new JButton("Ver siguiente");
+        JButton btnAtender = new JButton("Atender siguiente");
+        JButton btnActualizar = new JButton("Actualizar tablas");
+        JButton btnLimpiar = new JButton("Limpiar campos");
