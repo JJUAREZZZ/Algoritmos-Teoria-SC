@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import quicklibrary.model.Book;
-import quicklibrary.model.LoandRecord;
+import quicklibrary.model.LoanRecord;
 import quicklibrary.model.LoanRequest;
 import quicklibrary.structures.list.CustomLinkedList;
 
