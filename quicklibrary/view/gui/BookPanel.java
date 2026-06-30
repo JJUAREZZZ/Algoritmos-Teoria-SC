@@ -33,4 +33,10 @@ public class BookPanel extends JPanel {
         actualizarTodo();
     }
 
-
+  private void crearTablas() {
+        String[] columnasSolicitud = {"Codigo estudiante", "Nombre", "Codigo libro", "Fecha solicitud"};
+        modeloSolicitudes = new DefaultTableModel(columnasSolicitud, 0) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
