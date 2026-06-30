@@ -58,6 +58,9 @@ public class LibraryController {
         colaSolicitudes.enqueue(solicitud); // se agrega en la cola
         guardarSolicitudes();
     }
+    public LoanRequest consultarSiguienteSolicitud() {
+        return colaSolicitudes.peek();
+    }
 
     public String atenderSiguienteSolicitud() {
         // se obtiene la primera solicitud de la cola sin retirarla todavia
