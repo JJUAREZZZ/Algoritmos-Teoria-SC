@@ -223,7 +223,19 @@ public class LibraryController {
                 historialPrestamos.push(temporal.get(i));
             }
         } catch (IOException e) {
-            // Sin historial si el archivo no se puede leer.
+            // Sin historial el archivo no se puede leer.
         }
+    }
+
+    private void guardarLibros() {
+        gestorArchivos.guardarLibrosCsv(obtenerTodosLibros(), archivoLibros);
+    }
+
+    private void guardarSolicitudes() {
+        gestorArchivos.guardarSolicitudesCsv(obtenerSolicitudesPendientes(), archivoSolicitudes);
+    }
+
+    private void guardarHistorial() {
+        gestorArchivos.guardarHistorialCsv(obtenerHistorialPrestamos(), archivoHistorial);
     }
 }
