@@ -16,3 +16,9 @@ public class MainFrame extends JFrame {
         configurarVentana();
         crearComponentes();
     }
+
+   public MainFrame() {
+        this.controlador = new LibraryController();
+        configurarVentana();
+        crearComponentes();
+    }
