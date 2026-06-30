@@ -4,7 +4,7 @@ import quicklibrary.exception.BookNotFoundException;
 import quicklibrary.exception.DuplicateKeyException;
 import quicklibrary.structures.list.CustomLinkedList;
 
-public class CustomAVLTree<E extends Comparable<E>> {
+public class CustomAVLTree<E extends Comparable<T>> {
     private AVLNode<T> raiz;
     private int cantidad;
 
@@ -29,7 +29,7 @@ public class CustomAVLTree<E extends Comparable<E>> {
     }
     
     private AVLNode<T> insertarRecursivo(AVLNode<T> nodo, T dato) throws DuplicateKeyException {
-        if (node == null) {
+        if (nodo == null) {
             cantidad++;
             return new AVLNode<T>(dato);
         }
@@ -40,7 +40,7 @@ public class CustomAVLTree<E extends Comparable<E>> {
         } else if (comparacion > 0) {
             nodo.derecha = insertarRecursivo(nodo.derecha, dato);
         } else {
-            throw new DuplicateKeyException("Ya existe un registro con la misma clave.")
+            throw new DuplicateKeyException("Ya existe un registro con la misma clave.");
         }
 
         actualizarAltura(nodo);
@@ -89,14 +89,14 @@ public class CustomAVLTree<E extends Comparable<E>> {
             throw new BookNotFoundException("No se encontro el elemento para eliminar.");
         }
         
-        int comparacion = dato.compareTo(nodo.data);
+        int comparacion = dato.compareTo(nodo.dato);
         if (comparacion < 0) {
             nodo.izquierda = eliminarRecursivo(nodo.izquierda, dato);
         } else if (comparacion > 0) {
             nodo.derecha = eliminarRecursivo(nodo.derecha, dato);
         } else {
             cantidad--;
-            if (node.izquierda == null || node.derecha == null) {
+            if (nodo.izquierda == null || nodo.derecha == null) {
                 AVLNode<T> hijo = null;
                 if (nodo.izquierda != null) {
                     hijo = nodo.izquierda;
@@ -105,8 +105,8 @@ public class CustomAVLTree<E extends Comparable<E>> {
                 }
                 return hijo;
             } else {
-                AVLNode<T> succesor = encontrarMenor(nodo.derecha);
-                nodo.dato = succesor.dato;
+                AVLNode<T> sucesor = encontrarMenor(nodo.derecha);
+                nodo.dato = sucesor.dato;
                 node.derecha = eliminarSucesor(nodo.derecha, sucesor.dato);
             }
         }
@@ -143,6 +143,7 @@ public class CustomAVLTree<E extends Comparable<E>> {
         AVLNode<T> actual = nodo;
         while (actual.izquierda != null) {
             actual = actual.izquierda;
+        }
         return actual;
     }
 
