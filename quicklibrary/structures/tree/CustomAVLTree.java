@@ -4,7 +4,7 @@ import quicklibrary.exception.BookNotFoundException;
 import quicklibrary.exception.DuplicateKeyException;
 import quicklibrary.structures.list.CustomLinkedList;
 
-public class CustomAVLTree<E extends Comparable<T>> {
+public class CustomAVLTree<T extends Comparable<T>>
     private AVLNode<T> raiz;
     private int cantidad;
 
