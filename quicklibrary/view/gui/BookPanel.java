@@ -162,3 +162,8 @@ private void atenderSolicitud() {
         txtNombreEstudiante.setText("");
         txtCodigoLibro.setText("");
     }
+
+    private void MostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+}
