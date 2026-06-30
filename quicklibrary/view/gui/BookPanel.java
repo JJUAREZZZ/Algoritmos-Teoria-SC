@@ -85,3 +85,21 @@ public class BookPanel extends JPanel {
         JButton btnAtender = new JButton("Atender siguiente");
         JButton btnActualizar = new JButton("Actualizar tablas");
         JButton btnLimpiar = new JButton("Limpiar campos");
+        
+        panelBotones.add(btnRegistrar);
+        panelBotones.add(btnSiguiente);
+        panelBotones.add(btnAtender);
+        panelBotones.add(btnActualizar);
+        panelBotones.add(btnLimpiar);
+
+        panelPrincipal.add(panelCampos, BorderLayout.NORTH);
+        panelPrincipal.add(panelBotones, BorderLayout.CENTER);
+        add(panelPrincipal, BorderLayout.EAST);
+
+        btnRegistrar.addActionListener(e -> registrarSolicitud());
+        btnSiguiente.addActionListener(e -> mostrarSiguiente());
+        btnAtender.addActionListener(e -> atenderSolicitud());
+        btnActualizar.addActionListener(e -> actualizarTodo());
+        btnLimpiar.addActionListener(e -> limpiarCampos());
+    }
+
