@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import quicklibrary.model.Book;
-import quicklibrary.modelLoandRecord;
+import quicklibrary.model.LoandRecord;
 import quicklibrary.model.LoanRequest;
 import quicklibrary.structures.list.CustomLinkedList;
 
@@ -30,21 +30,22 @@ public class FileManager {
       escritor.write("codigo,titulo,autor,categoria,anio,estado\n");
       int i;
       for (i = 0; i < libros.size(); i++) {
-        escritor.write(libros.get(i).toCsv();
+        escritor.write(libros.get(i).toCsv());
         escritor.newLine();
       }
     } finally {
-      cerrarEscritor(Escritor);
+      cerrarEscritor(escritor);
     }
   }
 
   public void exportarHistorialCsv(CustomLinkedList<LoanRecord> historial, File destino) throws IOException {
     BufferedWriter escritor = null;
     try {
+      escritor = new BufferedWriter(new FileWriter(destino));
       escritor.write("codigoEstudiante, nombreEstudiante, codigoLibro, tituloLibro, fechaSolicitud, fechaAtencion, resultado\n");
       int i;
       for (i = 0; i < historial.size(); i++) {
-        escritor.write(historial.get(i).toCsv();
+        escritor.write(historial.get(i).toCsv());
         escritor.newLine();
       }
     } finally {
@@ -156,14 +157,15 @@ public class FileManager {
     try {
       escritor = new BufferedWriter(new FileWriter(destino));
       escritor.write("codigo,titulo,autor,categoria,anio,estado\n");
+      int i;
       for (i = 0; i < libros.size(); i++) {
-        escritor.write(libros.get(i).toCvs());
+        escritor.write(libros.get(i).toCsv());
         escritor.newLine();
       }
     } catch (IOException e) {
       System.out.println("No se pudo guardar libros: " + e.getMessage());
     } finally {
-      cerrarEscritor(Escritor);
+      cerrarEscritor(escritor);
     }
   }
   
@@ -171,7 +173,7 @@ public class FileManager {
     BufferedWriter escritor = null;
     try {
       escritor = new BufferedWriter(new FileWriter(destino));
-      escritor.write("codEstudiante,nombre,idLibro,fecha\n"); 
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,fechaSolicitud\n"); 
       int i;
       for (i = 0; i < solicitudes.size(); i++) {
         escritor.write(solicitudes.get(i).toCsv());
