@@ -1,0 +1,31 @@
+codigo,titulo,autor,categoria,anio,estado
+101,Programacion en Java,Herbert Schildt,Programacion,2022,DISPONIBLE
+102,Estructuras de Datos,Mark Allen Weiss,Computacion,2021,DISPONIBLE
+103,Introduccion a los Algoritmos,Thomas Cormen,Algoritmos,2022,PRESTADO
+104,Clean Code,Robert C. Martin,Programacion,2008,DISPONIBLE
+105,Design Patterns,Erich Gamma,Software,1994,DISPONIBLE
+106,Base de Datos,Abraham Silberschatz,Base de datos,2019,DISPONIBLE
+107,Sistemas Operativos,Abraham Silberschatz,Sistemas,2020,PRESTADO
+108,Redes de Computadoras,Andrew Tanenbaum,Redes,2011,DISPONIBLE
+109,Ingenieria de Software,Ian Sommerville,Software,2015,DISPONIBLE
+110,Inteligencia Artificial,Stuart Russell,Inteligencia Artificial,2021,DISPONIBLE
+111,Calculo de Una Variable,James Stewart,Matematica,2016,DISPONIBLE
+112,Algebra Lineal,Gilbert Strang,Matematica,2019,PRESTADO
+113,Fisica Universitaria,Young Freedman,Fisica,2018,DISPONIBLE
+114,Probabilidad y Estadistica,Murray Spiegel,Estadistica,2017,DISPONIBLE
+115,Compiladores,Alfred Aho,Computacion,2007,DISPONIBLE
+116,Arquitectura de Computadoras,John Hennessy,Hardware,2019,DISPONIBLE
+117,Patrones de Arquitectura,Martin Fowler,Software,2002,DISPONIBLE
+118,Python para Todos,Charles Severance,Programacion,2016,PRESTADO
+119,Matematica Discreta,Kenneth Rosen,Matematica,2018,DISPONIBLE
+120,Seguridad Informatica,William Stallings,Seguridad,2020,DISPONIBLE
+121,Mineria de Datos,Jiawei Han,Datos,2011,DISPONIBLE
+122,Analisis y Diseno de Algoritmos,Anany Levitin,Algoritmos,2012,DISPONIBLE
+123,Desarrollo Web Moderno,Jennifer Robbins,Web,2020,DISPONIBLE
+124,Fundamentos de Programacion,Luis Joyanes,Programacion,2017,DISPONIBLE
+125,Gestion de Proyectos,Kathy Schwalbe,Gestion,2019,DISPONIBLE
+126,Computacion en la Nube,Rajkumar Buyya,Cloud,2013,PRESTADO
+127,Machine Learning,Tom Mitchell,Inteligencia Artificial,1997,DISPONIBLE
+128,Programacion Concurrente,Brian Goetz,Programacion,2006,DISPONIBLE
+129,UX Design,Don Norman,Diseno,2013,DISPONIBLE
+130,Administracion de Redes,Kurose Ross,Redes,2021,DISPONIBLE
