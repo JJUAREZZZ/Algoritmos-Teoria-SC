@@ -107,7 +107,7 @@ public class LibraryController {
     public CustomLinkedList<Book> obtenerTodosLibros() {
         return arbolLibros.inOrder();
     }
-    
+
     public CustomLinkedList<Book> obtenerLibrosDisponibles() {
         CustomLinkedList<Book> todos = obtenerTodosLibros();
         CustomLinkedList<Book> resultado = new CustomLinkedList<Book>();
@@ -335,6 +335,10 @@ public class LibraryController {
 
     public String obtenerDibujoArbol() {
         return arbolLibros.drawTree();
+    }
+
+    public CustomAVLTree<Book> obtenerArbolLibros() {
+        return this.arbolLibros;
     }
 
     private String validarTexto(String texto, String campo) throws ValidationException {
