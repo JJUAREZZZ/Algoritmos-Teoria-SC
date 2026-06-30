@@ -63,4 +63,43 @@ public class Book implements Comparable<Book> {
     public boolean estaDisponible() {
         return this.estado == BookStatus.DISPONIBLE;
     }
+        @Override
+    public int compareTo(Book otroLibro) {
+        if (otroLibro == null) {
+            return 1;
+        }
+        return this.codigo.compareToIgnoreCase(otroLibro.codigo);
+    }
+
+    @Override
+    public String toString() {
+        return codigo + " - " + titulo + " (" + estado + ")";
+    }
+
+    public String toCsv() {
+        return limpiarCsv(codigo) + "," + limpiarCsv(titulo) + "," + limpiarCsv(autor) + "," +
+                limpiarCsv(categoria) + "," + anio + "," + estado;
+    }
+
+    public static Book fromCsv(String linea) {
+        String[] partes = linea.split(",", -1);
+        if (partes.length < 6) {
+            return null;
+        }
+        int anioLibro;
+        try {
+            anioLibro = Integer.parseInt(partes[4].trim());
+        } catch (NumberFormatException e) {
+            anioLibro = 0;
+        }
+        return new Book(partes[0].trim(), partes[1].trim(), partes[2].trim(), partes[3].trim(),
+                anioLibro, BookStatus.fromText(partes[5]));
+    }
+
+    private String limpiarCsv(String texto) {
+        if (texto == null) {
+            return "";
+        }
+        return texto.replace(",", " ").trim();
+    }
 
