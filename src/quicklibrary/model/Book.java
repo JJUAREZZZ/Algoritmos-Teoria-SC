@@ -98,7 +98,7 @@ public class Book implements Comparable<Book> {
         return new Book(partes[0].trim(), partes[1].trim(), partes[2].trim(), partes[3].trim(),
                 anioLibro, BookStatus.fromText(partes[5]));
     }
-
+    // Elimina comas para evitar problemas al guardar en el archivo CSV.
     private String limpiarCsv(String texto) {
         if (texto == null) {
             return "";
