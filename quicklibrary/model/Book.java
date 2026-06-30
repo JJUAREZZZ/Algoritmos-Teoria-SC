@@ -16,4 +16,51 @@ public class Book implements Comparable<Book> {
         this.anio = anio;
         this.estado = estado;
     }
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public BookStatus getEstado() {
+        return estado;
+    }
+
+    public void setEstado(BookStatus estado) {
+        this.estado = estado;
+    }
+
+    public boolean estaDisponible() {
+        return this.estado == BookStatus.DISPONIBLE;
+    }
 
