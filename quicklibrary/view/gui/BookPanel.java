@@ -14,3 +14,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
+
+public class LoanPanel extends JPanel {
+    private LibraryController controlador;
+    private JTable tablaSolicitudes;
+    private JTable tablaHistorial;
+    private DefaultTableModel modeloSolicitudes;
+    private DefaultTableModel modeloHistorial;
+
+    private JTextField txtCodigoEstudiante;
+    private JTextField txtNombreEstudiante;
+    private JTextField txtCodigoLibro;
