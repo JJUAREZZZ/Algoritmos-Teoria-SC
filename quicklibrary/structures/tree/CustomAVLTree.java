@@ -1,8 +1,10 @@
+package quicklibrary.structures.tree;
+
 public class CustomAVLTree<E extends Comparable<E>> extends CustomBSTree<E> {
     private boolean height;
 
     protected class NodeAVL extends Node {
-        protected int bf;
+        public int bf;
 
         public NodeAVL(E data) {
             super(data);

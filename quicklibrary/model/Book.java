@@ -1,13 +1,19 @@
-public class Book<E> {
-  provate stribg titulo;
-  private strig autor:
-  private E codigo; 
+package quicklibrary.model;
 
-  public Book (Steing titulo, String autor. E codigo){
-    this.tiulo = titulo;
-    this.autor = autor;
-    this.codigo = codigo;
-  
+public class Book implements Comparable<Book> {
+    private String codigo;
+    private String titulo;
+    private String autor;
+    private String categoria;
+    private int anio;
+    private BookStatus estado;
 
-}
+    public Book(String codigo, String titulo, String autor, String categoria, int anio, BookStatus estado) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.categoria = categoria;
+        this.anio = anio;
+        this.estado = estado;
+    }
 

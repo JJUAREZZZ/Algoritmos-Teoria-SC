@@ -82,3 +82,107 @@ public class FileManager {
     }
     return libros;
   }
+
+  public CustomLinkedList<Book> cargarLibrosCsv(File origen) throws IOException {
+    return importarLibrosCsv(origen); 
+  }
+  
+  public CustomLinkedList<LoanRequest> cargarSolicitudesCsv(File origen) throws IOException {
+    CustomLinkedList<LoanRequest> solicitudes = new CustomLinkedList<LoanRequest>();
+    BufferedReader lector = null;
+    try {
+      lector = new BufferedReader(new FileReader(origen));
+      String linea;
+      while ((linea = lector.readLine()) != null) {
+        LoanRequest solicitud = LoanRequest.fromCsv(linea);
+        if (solicitud != null) {
+          solicitudes.addLast(solicitud);
+        }
+      }
+    } finally {
+      cerrarLector(lector);
+    }
+    return solicitudes;
+  }
+  
+  public CustomLinkedList<LoanRecord> cargarHistorialCsv(File origen) throws IOException {
+    CustomLinkedList<LoanRecord> historial = new CustomLinkedList<LoanRecord>();
+    BufferedReader lector = null;
+    try {
+      lector = new BufferedReader(new FileReader(origen));
+      String linea;
+      while ((linea = lector.readLine()) != null) {
+        if (linea.trim().length() == 0 || linea.toLowerCase().startsWith("codigoestudiante,")) {
+          continue;
+        }
+        LoanRecord registro = LoanRecord.fromCsv(linea);
+        historial.addLast(registro); 
+      }
+    } finally {
+      cerrarLector(lector);
+    }
+    return historial;
+  }
+  
+  public void guardarLibrosCsv(CustomLinkedList<Book> libros, File destino) {
+    try {
+      exportarLibrosCsv(libros, destino);
+    } catch (IOException e) {
+      System.out.println("No se pudo guardar libros: " + e.getMessage());
+    }
+  }
+  
+  public void guardarSolicitudesCsv(CustomLinkedList<LoanRequest> solicitudes, File destino) {
+    BufferedWriter escritor = null;
+    try {
+      escritor = new BufferedWriter(new FileWriter(destino));
+      escritor.write("codEstudiante,nombre,idLibro,fecha\n"); 
+      int i;
+      for (i = 0; i < solicitudes.size(); i++) {
+        escritor.write(solicitudes.get(i).toCsv());
+        escritor.newLine();
+      }
+    } catch (IOException e) {
+      System.out.println("No se pudo guardar solicitudes: " + e.getMessage());
+    } finally {
+      cerrarEscritor(escritor);
+    }
+  }
+  
+  public void guardarHistorialCsv(CustomLinkedList<LoanRecord> historial, File destino) {
+    BufferedWriter escritor = null;
+    try {
+      escritor = new BufferedWriter(new FileWriter(destino));
+      escritor.write("codigoEstudiante,nombreEstudiante,codigoLibro,tituloLibro,fechaSolicitud,fechaAtencion,resultado\n");
+      int i;
+      for (i = 0; i < historial.size(); i++) {
+        escritor.write(historial.get(i).toCsv());
+        escritor.newLine();
+      }
+    } catch (IOException e) {
+      System.out.println("No se pudo guardar historial: " + e.getMessage());
+    } finally {
+      cerrarEscritor(escritor);
+    }
+  }
+  
+  private void cerrarLector(BufferedReader lector) {
+    if (lector != null) {
+      try {
+        lector.close();
+      } catch (IOException e) {
+        // Cierre silencioso para no interrumpir la aplicacion.
+      }
+    }
+  }
+  
+  private void cerrarEscritor(BufferedWriter escritor) {
+    if (escritor != null) {
+      try {
+        escritor.close();
+      } catch (IOException e) {
+        // Cierre silencioso para no interrumpir la aplicacion.
+      }
+    }
+  }
+}  

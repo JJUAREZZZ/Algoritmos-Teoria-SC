@@ -3,10 +3,10 @@ package quicklibrary.structures.tree;
 public class CustomBSTree<E extends Comparable<E>> {
     protected Node root;
 
-    protected class Node {
-        protected E data;
-        protected Node left;
-        protected Node right;
+    public class Node {
+        public E data;
+        public Node left;
+        public Node right;
 
         public Node(E data) {
             this.data = data;
@@ -21,6 +21,10 @@ public class CustomBSTree<E extends Comparable<E>> {
 
     public boolean isEmpty() {
         return this.root == null;
+    }
+
+    public Node getRaiz() {
+        return this.root;
     }
 
     public int height(Node node) {
