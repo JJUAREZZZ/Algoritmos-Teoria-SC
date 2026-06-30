@@ -16,12 +16,7 @@ public class MainFrame extends JFrame {
         configurarVentana();
         crearComponentes();
     }
-
-   public MainFrame() {
-        this.controlador = new LibraryController();
-        configurarVentana();
-        crearComponentes();
-    }
+    
  private void configurarVentana() {
         setTitle("QuickLibrary - Sistema de Prestamos de Libros");
         setSize(1060, 680);
