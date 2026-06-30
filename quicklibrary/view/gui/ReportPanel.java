@@ -19,6 +19,33 @@ public class ReportPanel extends JPanel {
     }
 
     private void crearComponentes() {
+        areaReporte = new JTextArea();
+        areaReporte.setEditable(false);
+        areaReporte.setFont(new Font("Consolas", Font.PLAIN, 12));
+        areaReporte.setBackground(new Color(245, 247, 250));
+        areaReporte.setForeground(new Color(44, 62, 80));
+        areaReporte.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JScrollPane scrollReporte = new JScrollPane(areaReporte);
+        scrollReporte.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
+                "Estadisticas y Estado General", TitledBorder.LEFT, TitledBorder.TOP, 
+                new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        panelBotones.setBackground(Color.WHITE);
+
+        JButton btnActualizar = crearBotonEstilizado("Actualizar reporte", new Color(52, 152, 219));
+        JButton btnExportar = crearBotonEstilizado("Exportar reporte TXT", new Color(155, 89, 182));
+
+        panelBotones.add(btnActualizar);
+        panelBotones.add(btnExportar);
+
+        add(scrollReporte, BorderLayout.CENTER);
+        add(panelBotones, BorderLayout.SOUTH);
+
+        btnActualizar.addActionListener(e -> actualizarReporte());
+        btnExportar.addActionListener(e -> exportarReporte());
     }
 
     private JButton crearBotonEstilizado(String texto, Color fondo) {
