@@ -59,6 +59,10 @@ public class LibraryController {
         guardarSolicitudes();
     }
 
+    public CustomLinkedList<LoanRequest> obtenerSolicitudesPendientes() {
+
+    }
+
     public String atenderSiguienteSolicitud() {
         // se obtiene la primera solicitud de la cola sin retirarla todavia
         LoanRequest solicitud = colaSolicitudes.peek();
@@ -93,6 +97,24 @@ public class LibraryController {
         guardarHistorial();
         return resultado;
     }
+
+    public String registrarDevolucion(String codigoLibro) throws ValidationException, BookNotFoundException {
+
+
+    return " ";
+    }
+
+    public CustomLinkedList<LoanRecord> obtenerHistorialPrestamos() {
+
+    }
+    public int contarSolicitudesPendientes() {
+
+    }
+
+    public int contarHistorial() {
+
+    }
+    
     private Book buscarLibroPorCodigoSinExcepcion(String codigo) {
         if (codigo == null) return null;
         Book llave = new Book(codigo.trim(), "", "", "", 0, BookStatus.DISPONIBLE);
