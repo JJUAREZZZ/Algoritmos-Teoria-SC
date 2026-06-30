@@ -247,11 +247,18 @@ public class BookPanel extends JPanel {
     }
 
     private void mostrarArbol() {
-        JTextArea area = new JTextArea(controlador.obtenerDibujoArbol(), 22, 60);
-        area.setEditable(false);
-        area.setFont(new Font("Consolas", Font.PLAIN, 12));
-        area.setBackground(new Color(245, 247, 250));
-        JOptionPane.showMessageDialog(this, new JScrollPane(area), "Vista del arbol AVL", JOptionPane.INFORMATION_MESSAGE);
+        JFrame ventanaArbol = new JFrame("Estructura Grafica del Arbol AVL");
+        ventanaArbol.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventanaArbol.setSize(1000, 600);
+        ventanaArbol.setLocationRelativeTo(this);
+
+        AVLTreeVisualizerPanel visualizador = new AVLTreeVisualizerPanel(controlador);
+        JScrollPane scroll = new JScrollPane(visualizador);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        ventanaArbol.add(scroll);
+        ventanaArbol.setVisible(true);
     }
 
     private void cargarSeleccion() {
