@@ -28,8 +28,8 @@ public class ReportPanel extends JPanel {
 
         JScrollPane scrollReporte = new JScrollPane(areaReporte);
         scrollReporte.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
-                "Estadisticas y Estado General", TitledBorder.LEFT, TitledBorder.TOP, 
+                BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true),
+                "Estadisticas y Estado General", TitledBorder.LEFT, TitledBorder.TOP,
                 new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
@@ -50,13 +50,12 @@ public class ReportPanel extends JPanel {
 
     private JButton crearBotonEstilizado(String texto, Color fondo) {
         JButton boton = new JButton(texto);
-        boton.setBackground(fondo);
-        boton.setForeground(Color.WHITE);
+        boton.setForeground(fondo.darker());
         boton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         boton.setFocusPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         boton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(fondo.darker(), 1, true),
+                BorderFactory.createLineBorder(fondo, 2, true),
                 BorderFactory.createEmptyBorder(8, 14, 8, 14)
         ));
         return boton;
