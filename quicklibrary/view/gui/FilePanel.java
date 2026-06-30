@@ -19,3 +19,16 @@ public class FilePanel extends JPanel {
         setBackground(Color.WHITE);
         crearComponentes();
     }
+
+    private void crearComponentes() {
+        JPanel panelIzquierda = new JPanel(new BorderLayout(12, 12));
+        panelIzquierda.setBackground(Color.WHITE);
+        panelIzquierda.setPreferredSize(new Dimension(320, 0));
+
+        JPanel panelExportar = new JPanel(new GridLayout(4, 1, 8, 8));
+        panelExportar.setBackground(Color.WHITE);
+        panelExportar.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(210, 220, 235), 1, true), 
+                "Exportar Datos", TitledBorder.LEFT, TitledBorder.TOP, 
+                new Font("Segoe UI", Font.BOLD, 13), new Color(52, 73, 94)));
+
