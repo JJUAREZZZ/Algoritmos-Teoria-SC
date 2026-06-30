@@ -24,7 +24,7 @@ public class AVLTreeVisualizerPanel extends JPanel {
         setBackground(COLOR_FONDO);
         setPreferredSize(new Dimension(2400, 800));
     }
-
+    //  pintar componentes
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,7 +37,7 @@ public class AVLTreeVisualizerPanel extends JPanel {
         try {
             arbol = controlador.obtenerArbolLibros();
         } catch (Exception e) {}
-
+    // se conpara si el arbol es distinto de nulo y no esta vacio
         if (arbol != null && !arbol.isEmpty()) {
             AVLNode<Book> raiz = arbol.getRaiz();
             int xInicial = getWidth() / 2;
@@ -53,7 +53,7 @@ public class AVLTreeVisualizerPanel extends JPanel {
             g2.drawString(msg, (getWidth() - fm.stringWidth(msg)) / 2, 100);
         }
     }
-
+    //metodo para dibujar los nodos
     private void dibujarNodo(Graphics2D g2, AVLNode<Book> nodo, int x, int y, int dx, AVLNode<Book> raizGlobal, CustomAVLTree<Book> arbol) {
         if (nodo == null || nodo.dato == null) return;
 
