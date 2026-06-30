@@ -1,303 +1,255 @@
 package quicklibrary.structures.tree;
 
-public class CustomAVLTree<E extends Comparable<E>> extends CustomBSTree<E> {
-    private boolean height;
+import quicklibrary.exception.BookNotFoundException;
+import quicklibrary.exception.DuplicateKeyException;
+import quicklibrary.structures.list.CustomLinkedList;
 
-    protected class NodeAVL extends Node {
-        public int bf;
+public class CustomAVLTree<E extends Comparable<E>> {
+    private AVLNode<T> raiz;
+    private int cantidad;
 
-        public NodeAVL(E data) {
-            super(data);
-            this.bf = 0;
-        }
-
-        @Override
-        public String toString() {
-            return data.toString() + "(" + bf + ")";
-        }
+    public CustomAVLTree() {
+        this.raiz = null;
+        this.cantidad = 0;
     }
 
-    protected Node insertRec(E x, NodeAVL node) throws DuplicateKeyException {
-        NodeAVL fat = node;
-        if (node == null) {
-            this.height = true;
-            fat = new NodeAVL(x);
-        } else {
-            int resC = node.data.compareTo(x);
-            if (resC == 0) throw new DuplicateKeyException(x + " ya se encuentra en el arbol...");
-
-            if (resC > 0) {
-                fat.left = insertRec(x, (NodeAVL) node.left);
-                if (this.height) {
-                    switch (fat.bf) {
-                        case 1: 
-                            fat.bf = 0; 
-                            this.height = false; 
-                            break;
-                        case 0: 
-                            fat.bf = -1; 
-                            this.height = true; 
-                            break;
-                        case -1: 
-                            fat = balanceToRight(fat); 
-                            this.height = false; 
-                            break;
-                    }
-                }
-            } else {
-                fat.right = insertRec(x, (NodeAVL) node.right);
-                if (this.height) {
-                    switch (fat.bf) {
-                        case -1: 
-                            fat.bf = 0; 
-                            this.height = false; 
-                            break;
-                        case 0: 
-                            fat.bf = 1; 
-                            this.height = true; 
-                            break;
-                        case 1: 
-                            fat = balanceToLeft(fat); 
-                            this.height = false; 
-                            break;
-                    }
-                }
-            }
-        }
-        return fat;
+    public boolean isEmpty() {
+        return raiz == null;
     }
 
-    private NodeAVL balanceToLeft(NodeAVL node) {
-        NodeAVL hijo = (NodeAVL) node.right;
-        switch (hijo.bf) {
-            case 1:
-                node.bf = 0; 
-                hijo.bf = 0;
-                node = rotateSL(node);
-                break;
-            case -1:
-                NodeAVL nieto = (NodeAVL) hijo.left;
-                switch (nieto.bf) {
-                    case -1: 
-                        node.bf = 0; 
-                        hijo.bf = 1; 
-                        break;
-                    case 0: 
-                        node.bf = 0; 
-                        hijo.bf = 0; 
-                        break;
-                    case 1: 
-                        node.bf = -1; 
-                        hijo.bf = 0; 
-                        break;
-                }
-                nieto.bf = 0;
-                node.right = rotateSR(hijo);
-                node = rotateSL(node);
-                break;
-            case 0:
-                node.bf = 1; 
-                hijo.bf = -1;
-                node = rotateSL(node);
-                break;
-        }
-        return node;
+    public int size() {
+        return cantidad;
     }
 
-    private NodeAVL balanceToRight(NodeAVL node) {
-        NodeAVL hijo = (NodeAVL) node.left;
-        switch (hijo.bf) {
-            case -1:
-                node.bf = 0; 
-                hijo.bf = 0;
-                node = rotateSR(node);
-                break;
-            case 1:
-                NodeAVL nieto = (NodeAVL) hijo.right;
-                switch (nieto.bf) {
-                    case 1: 
-                        node.bf = 0; 
-                        hijo.bf = -1; 
-                        break;
-                    case 0: 
-                        node.bf = 0; 
-                        hijo.bf = 0; 
-                        break;
-                    case -1: 
-                        node.bf = 1; 
-                        hijo.bf = 0; 
-                        break;
-                }
-                nieto.bf = 0;
-                node.left = rotateSL(hijo);
-                node = rotateSR(node);
-                break;
-            case 0:
-                node.bf = -1; 
-                hijo.bf = 1;
-                node = rotateSR(node);
-                break;
+    public void insert(T dato) throws DuplicateKeyException {
+        if (dato == null) {
+            return;
         }
-        return node;
+        raiz = insertarRecursivo(raiz, dato);
     }
     
-    private NodeAVL rotateSL(NodeAVL node) {
-        NodeAVL p = (NodeAVL) node.right;
-        node.right = p.left;
-        p.left = node;
-        node = p;
-        return node;
-    }
+    private AVLNode<T> insertarRecursivo(AVLNode<T> nodo, T dato) throws DuplicateKeyException {
+        if (node == null) {
+            cantidad++;
+            return new AVLNode<T>(dato);
+        }
 
-    private NodeAVL rotateSR(NodeAVL node) {
-        NodeAVL p = (NodeAVL) node.left;
-        node.left = p.right;
-        p.right = node;
-        node = p;
-        return node;
-    }
-
-    public void remove(E x) {
-        this.height = false;
-        this.root = removeRec(x, (NodeAVL) this.root);
-    }
-
-    private NodeAVL removeRec(E x, NodeAVL node) {
-        if (node == null) return null;
-        int cmp = x.compareTo(node.data);
-        if (cmp < 0) {
-            node.left = removeRec(x, (NodeAVL) node.left);
-            if (this.height) node = balanceOnRemoveLeft(node);
-        } else if (cmp > 0) {
-            node.right = removeRec(x, (NodeAVL) node.right);
-            if (this.height) node = balanceOnRemoveRight(node);
+        int comparacion = dato.compareTo(nodo.dato);
+        if (comparacion < 0) {
+            nodo.izquierda = insertarRecursivo(nodo.izquierda, dato);
+        } else if (comparacion > 0) {
+            nodo.derecha = insertarRecursivo(nodo.derecha, dato);
         } else {
-            if (node.left == null || node.right == null) {
-                this.height = true;
-                return (NodeAVL) (node.left != null ? node.left : node.right);
+            throw new DuplicateKeyException("Ya existe un registro con la misma clave.")
+        }
+
+        actualizarAltura(nodo);
+        return balancear(nodo);
+    }
+    
+    public T search(T dato) throws BookNotFoundException {
+        AVLNode<T> encontrado = buscarNodo(raiz, dato);
+        if (encontrado == null) {
+            throw new BookNotFoundException("No se encontro el elemento solicitado.");
+        }
+        return encontrado.dato;
+    }
+
+    public T searchOrNull(T dato) {
+        AVLNode<T> encontrado = buscarNodo(raiz, dato);
+        if (encontrado == null) {
+            return null;
+        }
+        return encontrado.dato;
+    }
+
+    private AVLNode<T> buscarNodo(AVLNode<T> nodo, T dato) {
+        if (nodo == null || dato == null) {
+            return null;
+        }
+        int comparacion = dato.compareTo(nodo.dato);
+        if (comparacion == 0) {
+            return nodo;
+        }
+        if (comparacion < 0) {
+            return buscarNodo(nodo.izquierda, dato);
+        }
+        return buscarNodo(nodo.derecha, dato);
+    }
+
+    public void delete(T dato) throws BookNotFoundException {
+        if (dato == null) {
+            return;
+        }
+        raiz = eliminarRecursivo(raiz, dato); 
+    }
+
+    private AVLNode<T> eliminarRecursivo(AVLNode<T> nodo, T dato) throws BookNotFoundException {
+        if (nodo == null) {
+            throw new BookNotFoundException("No se encontro el elemento para eliminar.");
+        }
+        
+        int comparacion = dato.compareTo(nodo.data);
+        if (comparacion < 0) {
+            nodo.izquierda = eliminarRecursivo(nodo.izquierda, dato);
+        } else if (comparacion > 0) {
+            nodo.derecha = eliminarRecursivo(nodo.derecha, dato);
+        } else {
+            cantidad--;
+            if (node.izquierda == null || node.derecha == null) {
+                AVLNode<T> hijo = null;
+                if (nodo.izquierda != null) {
+                    hijo = nodo.izquierda;
+                } else if (nodo.derecha != null) {
+                    hijo = nodo.derecha;
+                }
+                return hijo;
             } else {
-                NodeAVL successor = getMin((NodeAVL) node.right);
-                node.data = successor.data;
-                node.right = removeRec(successor.data, (NodeAVL) node.right);
-                if (this.height) node = balanceOnRemoveRight(node);
+                AVLNode<T> succesor = encontrarMenor(nodo.derecha);
+                nodo.dato = succesor.dato;
+                node.derecha = eliminarSucesor(nodo.derecha, sucesor.dato);
             }
         }
-        return node;
+        actualizarAltura(nodo);
+        return balancear(nodo);
     }
 
-    private NodeAVL getMin(NodeAVL node) {
-        while (node.left != null) node = (NodeAVL) node.left;
-        return node;
-    }
-
-    private NodeAVL balanceOnRemoveLeft(NodeAVL node) {
-        switch (node.bf) {
-            case -1: 
-                node.bf = 0; 
-                this.height = true; 
-                break;
-            case 0: 
-                node.bf = 1; 
-                this.height = false; 
-                break;
-            case 1:
-                NodeAVL rs = (NodeAVL) node.right;
-                int bfr = rs.bf;
-                node = balanceToLeft(node);
-                this.height = (bfr != 0);
-                break;
+    private AVLNode<T> eliminarSucesor(AVLNode<T> nodo, T dato) {
+        if (nodo == null) {
+            return null;
         }
-        return node;
-    }
-
-    private NodeAVL balanceOnRemoveRight(NodeAVL node) {
-        switch (node.bf) {
-            case 1: 
-                node.bf = 0; 
-                this.height = true; 
-                break;
-            case 0:
-                node.bf = -1; 
-                this.height = false; 
-                break;
-            case -1:
-                NodeAVL ls = (NodeAVL) node.left;
-                int bfl = ls.bf;
-                node = balanceToRight(node);
-                this.height = (bfl != 0);
-                break;
+        int comparacion = dato.compareTo(nodo.dato);
+        if (comparacion < 0) {
+            nodo.izquierda = eliminarSucesor(nodo.izquierda, dato);
+        } else if (comparacion > 0) {
+            nodo.derecha = eliminarSucesor(nodo.derecha, dato);
+        } else {
+            if (nodo.izquierda == null || nodo.derecha == null) {
+                if (nodo.izquierda != null) {
+                    return nodo.izquierda;
+                }
+                return nodo.derecha;
+            } else {
+                AVLNode<T> sucesor = encontrarMenor(nodo.derecha);
+                nodo.dato = sucesor.dato;
+                nodo.derecha = eliminarSucesor(nodo.derecha, sucesor.dato);
+            }
         }
-        return node;
+        actualizarAltura(nodo);
+        return balancear(nodo);
     }
 
-    public void preOrder() {
-        preOrderRec((NodeAVL) root);
-        System.out.println();
+    private AVLNode<T> encontrarMenor(AVLNode<T> nodo) {
+        AVLNode<T> actual = nodo;
+        while (actual.izquierda != null) {
+            actual = actual.izquierda;
+        return actual;
     }
 
-    private void preOrderRec(NodeAVL node) {
-        if (node != null) {
-            System.out.print(node.data + "(" + node.bf + ") ");
-            preOrderRec((NodeAVL) node.left);
-            preOrderRec((NodeAVL) node.right);
+    private int altura(AVLNode<T> nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return nodo.altura;
+    }
+
+    private int maximo(int primero, int segundo) {
+        if (primero > segundo) {
+            return primero;
+        }
+        return segundo;
+    }
+
+    private void actualizarAltura(AVLNode<T> nodo) {
+        if (nodo != null) {
+            nodo.altura = maximo(altura(nodo.izquierda), altura(nodo.derecha)) + 1;
         }
     }
 
-    public void inOrder() {
-        inOrderRec((NodeAVL) root);
-        System.out.println();
-    }
-
-    private void inOrderRec(NodeAVL node) {
-        if (node != null) {
-            inOrderRec((NodeAVL) node.left);
-            System.out.print(node.data + "(" + node.bf + ") ");
-            inOrderRec((NodeAVL) node.right);
+    private int obtenerBalance(AVLNode<T> nodo) {
+        if (nodo == null) {
+            return 0;
         }
+        return altura(nodo.izquierda) - altura(nodo.derecha);
     }
 
-    public void postOrder() {
-        postOrderRec((NodeAVL) root);
-        System.out.println();
-    }
+    private AVLNode<T> balancear(AVLNode<T> nodo) {
+        int balance = obtenerBalance(nodo);
 
-    private void postOrderRec(NodeAVL node) {
-        if (node != null) {
-            postOrderRec((NodeAVL) node.left);
-            postOrderRec((NodeAVL) node.right);
-            System.out.print(node.data + "(" + node.bf + ") ");
+        if (balance > 1) {
+            if (obtenerBalance(nodo.izquierda) < 0) {
+                nodo.izquierda = rotarIzquierda(nodo.izquierda);
+            }
+            return rotarDerecha(nodo);
         }
-    }
 
-    public void breadthFirst() {
-        int h = height(root);
-        for (int i = 0; i < h; i++) {
-            printLevel((NodeAVL) root, i);
+        if (balance < -1) {
+            if (obtenerBalance(nodo.derecha) > 0) {
+                nodo.derecha = rotarDerecha(nodo.derecha);
+            }
+            return rotarIzquierda(nodo);
         }
-        System.out.println();
+
+        return nodo;
     }
 
-    private void printLevel(NodeAVL node, int level) {
-        if (node == null) return;
-        if (level == 0) System.out.print(node.data + "(" + node.bf + ") ");
-        else {
-            printLevel((NodeAVL) node.left, level - 1);
-            printLevel((NodeAVL) node.right, level - 1);
+    private AVLNode<T> rotarDerecha(AVLNode<T> y) {
+        AVLNode<T> x = y.izquierda;
+        AVLNode<T> subArbol = x.derecha;
+
+        x.derecha = y;
+        y.izquierda = subArbol;
+
+        actualizarAltura(y);
+        actualizarAltura(x);
+
+        return x;
+    }
+
+    private AVLNode<T> rotarIzquierda(AVLNode<T> x) {
+        AVLNode<T> y = x.derecha;
+        AVLNode<T> subArbol = y.izquierda;
+
+        y.izquierda = x;
+        x.derecha = subArbol;
+
+        actualizarAltura(x);
+        actualizarAltura(y);
+
+        return y;
+    }
+
+    public CustomLinkedList<T> inOrder() {
+        CustomLinkedList<T> lista = new CustomLinkedList<T>();
+        inOrderRecursivo(raiz, lista);
+        return lista;
+    }
+
+    private void inOrderRecursivo(AVLNode<T> nodo, CustomLinkedList<T> lista) {
+        if (nodo == null) {
+            return;
         }
+        inOrderRecursivo(nodo.izquierda, lista);
+        lista.addLast(nodo.dato);
+        inOrderRecursivo(nodo.derecha, lista);
     }
 
-    @Override
-    public String toString() {
+    public String drawTree() {
+        if (raiz == null) {
+            return "El arbol esta vacio.";
+        }
         StringBuilder sb = new StringBuilder();
-        toStringRec((NodeAVL) root, sb);
-        return sb.toString().trim();
+        construirTexto(raiz, "", true, sb);
+        return sb.toString();
     }
 
-    private void toStringRec(NodeAVL node, StringBuilder sb) {
-        if (node != null) {
-            toStringRec((NodeAVL) node.left, sb);
-            sb.append(node.data.toString()).append("(").append(node.bf).append(") ");
-            toStringRec((NodeAVL) node.right, sb);
+    private void construirTexto(AVLNode<T> nodo, String prefijo, boolean esUltimo, StringBuilder sb) {
+        if (nodo.derecha != null) {
+            construirTexto(nodo.derecha, prefijo + (esUltimo ? "│   " : "    "), false, sb);
+        }
+        sb.append(prefijo).append(esUltimo ? "└── " : "┌── ").append(nodo.dato).append("\n");
+        if (nodo.izquierda != null) {
+            construirTexto(nodo.izquierda, prefijo + (esUltimo ? "    " : "│   "), true, sb);
         }
     }
 }
