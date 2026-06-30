@@ -16,3 +16,23 @@ préstamo.
 El proyecto deberá ser desarrollado en Java, aplicando estructuras de datos
 implementadas por los propios estudiantes.
 
+2. Duración
+Una semana
+
+3. Objetivo general
+Diseñar e implementar una aplicación básica para gestionar libros y solicitudes de
+préstamo, utilizando una estructura de datos lineal y una estructura de datos no lineal.
+
+4. Objetivos específicos
+• Implementar una estructura de datos lineal genérica.
+• Implementar una estructura de datos no lineal genérica.
+• Registrar y consultar información de libros.
+• Administrar solicitudes de préstamo respetando el orden de llegada.
+• Analizar la complejidad temporal de las principales operaciones.
+• Organizar el trabajo del equipo mediante Git y GitHub.
+5. Descripción del problema
+La biblioteca dispone de un catálogo de libros que debe ser consultado constantemente
+por los estudiantes.
+El sistema deberá solucionar los siguientes problemas:
+• Dificultad para encontrar rápidamente un libro.
+• Falta de control sobre el orden de las solicitudes.
