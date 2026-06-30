@@ -25,52 +25,12 @@ public class BookPanel extends JPanel {
     private JTextField txtBusqueda;
     private JComboBox<String> cboCriterio;
 
-    public BookPanel(LibraryController controlador) {
+    public LoanPanel(LibraryController controlador) {
         this.controlador = controlador;
-        setLayout(new BorderLayout(15, 15));
-        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        setBackground(Color.WHITE);
-        crearTabla();
+        setLayout(new BorderLayout(10, 10));
+        crearTablas();
         crearFormulario();
+        actualizarTodo();
     }
 
-    private void crearTabla() {
-    }
 
-    private void crearFormulario() {
-    }
-
-    private JButton crearBotonEstilizado(String texto, Color fondo) {
-        return null;
-    }
-
-    public void actualizarTabla(CustomLinkedList<Book> libros) {
-    }
-
-    private void registrarLibro() {
-    }
-
-    private void modificarLibro() {
-    }
-
-    private void eliminarLibro() {
-    }
-
-    private void buscarPorCodigo() {
-    }
-
-    private void buscarPorTexto() {
-    }
-
-    private void mostrarArbol() {
-    }
-
-    private void cargarSeleccion() {
-    }
-
-    private void limpiarCampos() {
-    }
-
-    private void mostrarError(String mensaje) {
-    }
-}
