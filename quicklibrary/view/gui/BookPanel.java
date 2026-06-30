@@ -150,3 +150,9 @@ private void mostrarSiguiente() {
         }
         JOptionPane.showMessageDialog(this, "Siguiente solicitud:\n" + solicitud.toString());
     }
+    
+private void atenderSolicitud() {
+        String resultado = controlador.atenderSiguienteSolicitud();
+        JOptionPane.showMessageDialog(this, resultado);
+        actualizarTodo();
+    }
